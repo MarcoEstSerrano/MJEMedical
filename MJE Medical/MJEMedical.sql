@@ -1,9 +1,9 @@
-create database MJEMedical;
+create database MJEMedical;historial de medicina imagen
 use MJEMedical;
 create table usuarios(
 	id int not null AUTO_INCREMENT,
     user_name varchar(50),
-    email varchar(50),
+    email varchar(50),multimedia
     pwd varchar(100),
     user_status int,
     PRIMARY KEY (id)
@@ -43,19 +43,10 @@ create table citas(
     ubication varchar(100),
     hora varchar(50),
     especialidad varchar(100),
-	estado int,
-    primary key(id)
+	estado int
 );
 
-create table notificaciones(
-	id int not null auto_increment,
-	userId int,
-    destinoId int,
-    titulo varchar(50),
-    descripcion varchar(300),
-    fecha varchar(50),
-    primary key(id)
-);
+
 
 DELETE FROM gestion WHERE e_name IN ('Notificaciones');
 
@@ -72,4 +63,6 @@ VALUES (1, "Historial de consulta", "Revisa tus citas anteriores.", "30/03/2025"
 INSERT INTO usuarios (user_name, email, pwd, user_status)
 VALUES ("Marco", "marcoesteban777@gmail.com", "123", 1);
 
-
+SELECT * FROM reservas INNER JOIN paseos ON reservas.event_id = paseos.e_id WHERE reservas.user_id = 2;
+UPDATE paseos SET e_tickets = 200 WHERE e_id = 7;
+SELECT * FROM paseos;

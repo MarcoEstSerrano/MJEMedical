@@ -13,14 +13,6 @@
             String email = request.getParameter("txtEmail");
             String pswd = request.getParameter("txtPwd");
 
-            
-            if (email == null || !email.endsWith("@gmail.com")) {
-                request.setAttribute("errorMensage", "El correo electrónico debe ser de dominio @gmail.com");
-                RequestDispatcher rd = request.getRequestDispatcher("ErrorHandler.jsp");
-                rd.forward(request, response);
-                return; 
-            }
-
             DbHelper dbh = new DbHelper();
 
             request.getSession(false);
@@ -29,23 +21,46 @@
                 session.invalidate();
             }
 
-            ResultSet rs = dbh.validateLogin(email, pswd);
+            String resultado = dbh.validateLogin(email, pswd);
 
-            if (rs.next()) {
-                session = request.getSession();
-                session.setAttribute("email", email);
-                session.setAttribute("userId", rs.getInt("id"));
-                session.setAttribute("userName", rs.getString("user_name"));
-                dbh.close();
+            switch (resultado) {
+                case "Usuario":
+                    ResultSet rs = dbh.getUser(email, pswd);
 
-                RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
-                rd.forward(request, response);
-                return;
-            } else {
-                request.setAttribute("errorMensage", "El usuario ingresado no está registrado");
-                RequestDispatcher rd = request.getRequestDispatcher("ErrorHandler.jsp");
-                rd.forward(request, response);
+                    while (rs.next()) {
+                        session = request.getSession();
+                        session.setAttribute("email", email);
+                        session.setAttribute("userId", rs.getInt("id"));
+                        session.setAttribute("userName", rs.getString("user_name"));
+
+
+                        RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+                        rd.forward(request, response);
+                    }
+
+                    break;
+                case "Medico":
+                    ResultSet rs2 = dbh.getMedic(email, pswd);
+
+                    while (rs2.next()) {
+                        session = request.getSession();
+                        session.setAttribute("email", email);
+                        session.setAttribute("medicId", rs2.getInt("id"));
+                        session.setAttribute("medicName", rs2.getString("nombre"));
+                        session.setAttribute("especialidad", rs2.getString("especialidad"));
+
+                        RequestDispatcher rd = request.getRequestDispatcher("homeMedic.jsp");
+                        rd.forward(request, response);
+                    }
+
+                    break;
+                default:
+                    request.setAttribute("errorMensage", "El usuario ingresado no está registrado");
+                    RequestDispatcher rd = request.getRequestDispatcher("ErrorHandler.jsp");
+                    rd.forward(request, response);
             }
+
+
         %>
     </body>
 </html>

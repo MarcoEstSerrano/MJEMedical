@@ -8,22 +8,25 @@ public class Notificacion {
     private String titulo;
     private String descripcion;
     private String fecha;
+    private int estado;
 
-    public Notificacion(int id, int userId, int destinoId, String titulo, String descripcion, String fecha) {
+    public Notificacion(int id, int userId, int destinoId, String titulo, String descripcion, String fecha, int estado) {
         this.id = id;
         this.userId = userId;
         this.destinoId = destinoId;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fecha = fecha;
+        this.estado = estado;
     }
 
-    public Notificacion(int userId, int destinoId, String titulo, String descripcion, String fecha) {
+    public Notificacion(int userId, int destinoId, String titulo, String descripcion, String fecha, int estado) {
         this.userId = userId;
         this.destinoId = destinoId;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fecha = fecha;
+        this.estado = estado;
     }
 
     public int getId() {
@@ -73,5 +76,14 @@ public class Notificacion {
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+    
     
 }

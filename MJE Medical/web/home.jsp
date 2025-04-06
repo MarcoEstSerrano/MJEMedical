@@ -1,8 +1,9 @@
+<%@page import="app.model.pckg.Notificacion"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="app.dataBase.pckg.DbHelper"%>
 <%@page import="app.model.pckg.Event"%>
-<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.sql.ResultSet"%>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -37,8 +38,8 @@
                 width: 100%;
                 margin: 0;
             }
-            
-         
+
+
 
             .header h3 {
                 font-size: 3rem; /* Aumentar el tamaño de la fuente del título */
@@ -170,6 +171,14 @@
                 RequestDispatcher rd = request.getRequestDispatcher("ErrorHandler.jsp");
                 rd.forward(request, response);
             }
+
+            int userId = (int) session.getAttribute("userId");
+            DbHelper dbh = new DbHelper();
+            
+            Notificacion noti = new Notificacion(1, 1, "Prueba1", "Prueba de notis", "20/20/20",1);
+            dbh.saveNotification(noti);
+            
+            ResultSet notis = dbh.getNotificaciones(userId);
         %>
 
         <!-- Encabezado -->
@@ -217,7 +226,7 @@
         <!-- Contenedor de eventos -->
         <div class="container mt-5">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 justify-content-center">
-                
+
                 <div class="col mb-4">
                     <div class="card">
                         <img src="img/notificaciones.jpg" class="card-img-top" />
@@ -225,14 +234,14 @@
                             <h5 class="card-title">Notificaciones</h5>
                             <p class="card-text">Descripcion: Mantente al día</p>
                             <div class="mt-auto">
-                                <a href="Notificaciones.jsp" class="btn btn-primary w-100"><b>Seleccionar</b></a>
+                                <a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" class="btn btn-primary w-100"><b>Seleccionar</b></a>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                
-            
+
+
+
                 <div class="col mb-4">
                     <div class="card">
                         <img src="img/solic.jpeg" class="card-img-top" />
@@ -245,9 +254,9 @@
                         </div>
                     </div>
                 </div>
-                
-                
-                
+
+
+
                 <div class="col mb-4">
                     <div class="card">
                         <img src="img/historial.jpg" class="card-img-top" />
@@ -260,20 +269,30 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
-        
+
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
-                <h5 id="offcanvasRightLabel">Offcanvas right</h5>
+                <h5 id="offcanvasRightLabel">Notificaciones</h5>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
                 <ul class="list-group">
-                    <% while (notifications.next()) {%>        
-                    <li class="list-group-item"><%=notifications.getString("action")%> / <%=notifications.getString("description")%></li>
-                        <% }%>    
+                    
+                    <%
+                    if(notis.next()){
+                        while (notis.next()) {%>        
+                            <li class="list-group-item"><%=notis.getString("titulo")%> / <%=notis.getString("descripcion")%>
+                                <a href="quitarNotificacion.jsp?id=<%=notis.getString("id")%>" class="btn btn-primary w-10"><b>Listo</b></a>
+                            </li>
+                    <% 
+                        }
+                    }else{
+                    %>  
+                      <h3>Sin notificaciones</h3>
+                    <% } %>     
                 </ul>
             </div>
         </div>

@@ -42,17 +42,40 @@ public class DbHelper {
         }
     }
 
-    public ResultSet validateLogin(String email, String pswd) throws SQLException {
+    public boolean validateLoginUsers(String email, String pswd) throws SQLException {
+        PreparedStatement preState1 = conn.prepareStatement("SELECT * FROM usuarios WHERE email= ? AND pwd= ? AND user_status = 1;");
+        preState1.setString(1, email);
+        preState1.setString(2, pswd);
+        ResultSet resultset = preState1.executeQuery();
+
+        return (resultset.next()) ? true : false;
+    }
+
+    public boolean validateLoginMedicos(String email, String pswd) throws SQLException {
+        PreparedStatement preState1 = conn.prepareStatement("SELECT * FROM medicos WHERE email= ? AND psw= ?;");
+        preState1.setString(1, email);
+        preState1.setString(2, pswd);
+        ResultSet resultset = preState1.executeQuery();
+
+        return (resultset.next()) ? true : false;
+    }
+
+    public String validateLogin(String email, String pswd) throws SQLException {
+        DbHelper bd = new DbHelper();
         try {
-            PreparedStatement preState = conn.prepareStatement("SELECT * FROM usuarios WHERE email= ? AND pwd= ? AND user_status = 1;");
-            preState.setString(1, email);
-            preState.setString(2, pswd);
-            ResultSet resultset = preState.executeQuery();
-            return resultset;
+
+            if (bd.validateLoginUsers(email, pswd)) {
+                return "Usuario";
+            } else if (bd.validateLoginMedicos(email, pswd)) {
+                return "Medico";
+            } else {
+                return "null";
+            }
+
         } catch (SQLException ex) {
             //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
         }
-        return null;
+        return "null";
     }
 
     public boolean saveUser(User user) throws SQLException {
@@ -192,25 +215,26 @@ public class DbHelper {
             return false;
         }
     }
-    
+
     public void saveNotification(Notificacion note) throws SQLException {
         try {
-            
-            PreparedStatement predStatement
-                    = conn.prepareStatement("INSERT INTO notificaciones (userId, destinoId, titulo, descripcion, fecha) VALUES (?, ?, ?, ?, ?);");
 
-            String today = LocalDateTime.now().toString();  
-            
+            PreparedStatement predStatement
+                    = conn.prepareStatement("INSERT INTO notificaciones (userId, destinoId, titulo, descripcion, fecha, estado) VALUES (?, ?, ?, ?, ?, ?);");
+
+            String today = LocalDateTime.now().toString();
+
             predStatement.setInt(1, note.getUserId());
             predStatement.setInt(2, note.getDestinoId());
             predStatement.setString(3, note.getTitulo());
             predStatement.setString(4, note.getDescripcion());
             predStatement.setString(5, note.getFecha());
-            predStatement.executeUpdate();           
-        } catch (SQLException ex) {            
+            predStatement.setInt(6, note.getEstado());
+            predStatement.executeUpdate();
+        } catch (SQLException ex) {
         }
-        
-    }    
+
+    }
 
     public boolean reservarPaseo(int paseoId, int userId, int r_tickets) throws SQLException {
         try {
@@ -273,7 +297,7 @@ public class DbHelper {
         }
         return null;
     }
-    
+
     public ResultSet getReserves(int userId) throws SQLException {
         try {
             PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM reservas INNER JOIN paseos ON reservas.event_id = paseos.e_id WHERE reservas.user_id = ?;");
@@ -286,7 +310,7 @@ public class DbHelper {
         }
         return null;
     }
-    
+
     public ResultSet getReserv(int reservId) throws SQLException {
         try {
             PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM reservas WHERE reserv_id = ?;");
@@ -299,7 +323,7 @@ public class DbHelper {
         }
         return null;
     }
-    
+
     public ResultSet getReservFullInfo(int reservId) throws SQLException {
         try {
             PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM reservas INNER JOIN gestion ON reservas.event_id = gestion.e_id WHERE reservas.reserv_id = ?;");
@@ -312,7 +336,7 @@ public class DbHelper {
         }
         return null;
     }
-    
+
     public boolean cancelarReserva(int reservId) throws SQLException {
         try {
             PreparedStatement predStatement
@@ -328,7 +352,7 @@ public class DbHelper {
             return false;
         }
     }
-    
+
     public boolean actualizarReserva(int reservId, int newTickets) throws SQLException {
         try {
             PreparedStatement predStatement
@@ -344,5 +368,63 @@ public class DbHelper {
             //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
             return false;
         }
+    }
+
+    public ResultSet getNotificaciones(int id) throws SQLException {
+        try {
+            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM notificaciones WHERE destinoId = ? AND estado = ?;");
+            predStatement.setInt(1, id);
+            predStatement.setInt(2, 1);
+            ResultSet resultset = predStatement.executeQuery();
+            return resultset;
+        } catch (SQLException ex) {
+            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
+        }
+        return null;
+    }
+
+    public boolean actualizarEstadoNotificacion(int notiId) throws SQLException {
+        try {
+            PreparedStatement predStatement
+                    = conn.prepareStatement("UPDATE notificaciones SET estado = ? WHERE id = ?;");
+
+            predStatement.setInt(1, 0);
+            predStatement.setInt(2, notiId);
+            predStatement.executeUpdate();
+
+            return true;
+
+        } catch (SQLException ex) {
+            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
+            return false;
+        }
+    }
+
+    public ResultSet getUser(String email, String pwd) throws SQLException {
+        try {
+            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM usuarios WHERE email = ? AND pwd = ?;");
+            predStatement.setString(1, email);
+            predStatement.setString(2, pwd);
+
+            return predStatement.executeQuery();
+
+        } catch (SQLException ex) {
+            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
+        }
+        return null;
+    }
+
+    public ResultSet getMedic(String email, String pwd) throws SQLException {
+        try {
+            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM medicos WHERE email = ? AND psw = ?;");
+            predStatement.setString(1, email);
+            predStatement.setString(2, pwd);
+
+            return predStatement.executeQuery();
+
+        } catch (SQLException ex) {
+            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
+        }
+        return null;
     }
 }

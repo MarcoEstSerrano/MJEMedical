@@ -3,7 +3,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
-    DbHelper dbh = new DbHelper();
+    String motivo = request.getParameter("txtMotivo");
+    String descripcion = request.getParameter("txtDescription");
+    String especialidad = request.getParameter("tipo");
 %>
 <!DOCTYPE html>
 <html>
@@ -160,35 +162,20 @@
         <div class="container mt-5 mb-5">
             <div class="d-flex justify-content-center align-items-center">
                 <div class="card shadow-lg p-4 rounded" style="max-width: 500px; width: 100%;">
-                    <h2 class="text-center text-primary mb-3"><b>Solicitar cita</b></h2>
-                    <h4 class="text-center text-primary mb-3">Llene los espacios en blanco</h4>
-                    <form action="Solicita2.jsp">
-                        <div class="mb-3">
-                            <label class="form-label"><i class="fas fa-pen"></i> <b>Motivo de su cita</b></label>
-                            <input type="text" class="form-control" name="txtMotivo" placeholder="Ingresa el motivo" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label"><i class="fas fa-info-circle"></i> <b>Descripción</b></label>
-                            <textarea class="form-control" name="txtDescription" rows="4" maxlength="200" required></textarea>
-                        </div>
+                    <h4 class="text-center text-primary mb-3"><b>Citas diponibles</b></h4>
+                    <form action="CreateEventLogic.jsp">
+                        <h4>Especialidad elegida:<%=especialidad%></h4>
                         <div class="mb-3">
                             <label class="form-label"><i class="fas fa-ticket-alt"></i> <b>Especialidad</b></label>
                             <select name="tipo" id="tipo" required class="form-select">
-                                <option value="Medicina General">Medicina General</option>
-                                <option value="Cardiología">Cardiología</option>
-                                <option value="Dermatología">Dermatología</option>
-                                <option value="Gastroenterología">Gastroenterología</option>>
-                                <option value="Ginecología">Ginecología</option>
-                                <option value="Medicina Interna">Medicina Interna</option>
-                                <option value="Nutriología">Nutriología</option>
-                                <option value="Oftalmología">Oftalmología</option>
-                                <option value="Ortopedia">Ortopedia</option>
-                                <option value="Pediatría">Pediatría</option>
-                                <option value="Psiquiatría">Psiquiatría</option>
+                                <option value="Medicina General">Doctor: Gerardo Arias. Fecha|Hora: 20/20/2000 | 8:00</option>
+                                <option value="Medicina General">20/10/2000 | 8:00</option>
+                                <option value="Medicina General">20/9/2000 | 8:00</option>
+ 
                             </select>
 
                         </div>
-                        <button type="submit" class="btn btn-primary w-100"><i class="fas fa-save"></i> Siguiente</button>
+                        <button type="submit" class="btn btn-primary w-100"><i class="fas fa-save"></i> Solicitar</button>
                     </form>
                 </div>
             </div>

@@ -9,6 +9,15 @@ create table usuarios(
     PRIMARY KEY (id)
 );
 
+create table medicos(
+	id int auto_increment not null,
+    nombre varchar(100),
+    email varchar(300),
+    psw varchar(100),
+    especialidad varchar(100),
+    primary key(id)
+);
+
 describe usuarios;
 select * from usuarios;
 
@@ -39,13 +48,31 @@ create table citas(
     doctorid int,
     userId int not null,
     motivo varchar(200),
-    _date varchar(100),
-    ubication varchar(100),
-    hora varchar(50),
+	fechaHora varchar(50),
     especialidad varchar(100),
-	estado int
+	estado int,
+    primary key(id)
 );
 
+create table espaciosDisponibles(
+	id int auto_increment not null,
+	doctorId int,
+	fecha varchar(50),
+	especialidad varchar(100),
+    estado int,
+    primary key(id)
+);
+
+create table notificaciones(
+	id int auto_increment not null,
+	userId int,
+	destinoId int,
+	titulo varchar(100),
+	descripcion varchar(300),
+	fecha varchar(100),
+    estado int,
+	primary key(id)
+);
 
 
 DELETE FROM gestion WHERE e_name IN ('Notificaciones');
@@ -63,6 +90,50 @@ VALUES (1, "Historial de consulta", "Revisa tus citas anteriores.", "30/03/2025"
 INSERT INTO usuarios (user_name, email, pwd, user_status)
 VALUES ("Marco", "marcoesteban777@gmail.com", "123", 1);
 
-SELECT * FROM reservas INNER JOIN paseos ON reservas.event_id = paseos.e_id WHERE reservas.user_id = 2;
-UPDATE paseos SET e_tickets = 200 WHERE e_id = 7;
-SELECT * FROM paseos;
+
+-- Medicina General
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dr. Javier Pérez', 'javier.perez@correo.com', 'password123', 'Medicina General');
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dra. Patricia López', 'patricia.lopez@correo.com', 'password123', 'Medicina General');
+
+-- Cardiología
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dr. Carlos Mendoza', 'carlos.mendoza@correo.com', 'password123', 'Cardiología');
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dra. Claudia Rodríguez', 'claudia.rodriguez@correo.com', 'password123', 'Cardiología');
+
+-- Dermatología
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dr. Marco García', 'marco.garcia@correo.com', 'password123', 'Dermatología');
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dra. Laura Hernández', 'laura.hernandez@correo.com', 'password123', 'Dermatología');
+
+-- Gastroenterología
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dr. José Pérez', 'jose.perez@correo.com', 'password123', 'Gastroenterología');
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dra. Ana Martínez', 'ana.martinez@correo.com', 'password123', 'Gastroenterología');
+
+-- Ginecología
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dr. Julio Gómez', 'julio.gomez@correo.com', 'password123', 'Ginecología');
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dra. María Sánchez', 'maria.sanchez@correo.com', 'password123', 'Ginecología');
+
+-- Medicina Interna
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dr. Félix Ruiz', 'felix.ruiz@correo.com', 'password123', 'Medicina Interna');
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dra. Beatriz González', 'beatriz.gonzalez@correo.com', 'password123', 'Medicina Interna');
+
+-- Nutriología
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dr. Sergio López', 'sergio.lopez@correo.com', 'password123', 'Nutriología');
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dra. Carolina Pérez', 'carolina.perez@correo.com', 'password123', 'Nutriología');
+
+-- Oftalmología
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dr. Luis Rodríguez', 'luis.rodriguez@correo.com', 'password123', 'Oftalmología');
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dra. Silvia Fernández', 'silvia.fernandez@correo.com', 'password123', 'Oftalmología');
+
+-- Ortopedia
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dr. Héctor Álvarez', 'hector.alvarez@correo.com', 'password123', 'Ortopedia');
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dra. Teresa López', 'teresa.lopez@correo.com', 'password123', 'Ortopedia');
+
+-- Pediatría
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dr. Esteban Ramírez', 'esteban.ramirez@correo.com', 'password123', 'Pediatría');
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dra. Carla Jiménez', 'carla.jimenez@correo.com', 'password123', 'Pediatría');
+
+-- Psiquiatría
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dr. Andrés Gómez', 'andres.gomez@correo.com', 'password123', 'Psiquiatría');
+INSERT INTO medicos (nombre, email, psw, especialidad) VALUES ('Dra. Patricia Moreno', 'patricia.moreno@correo.com', 'password123', 'Psiquiatría');
+
+SELECT * FROM medicos WHERE email= "javier.perez@correo.com" AND psw= "password123";
+SELECT * FROM usuarios WHERE email= "juan@gmail.com"AND pwd = "123";

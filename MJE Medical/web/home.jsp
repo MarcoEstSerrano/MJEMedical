@@ -264,6 +264,19 @@
             </div>
         </div>
         
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+                <h5 id="offcanvasRightLabel">Offcanvas right</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="list-group">
+                    <% while (notifications.next()) {%>        
+                    <li class="list-group-item"><%=notifications.getString("action")%> / <%=notifications.getString("description")%></li>
+                        <% }%>    
+                </ul>
+            </div>
+        </div>
 
     </body>
 </html>

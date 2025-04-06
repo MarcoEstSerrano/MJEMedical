@@ -1,12 +1,14 @@
 package app.dataBase.pckg;
 
 import app.model.pckg.Event;
+import app.model.pckg.Notificacion;
 import app.model.pckg.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -190,6 +192,25 @@ public class DbHelper {
             return false;
         }
     }
+    
+    public void saveNotification(Notificacion note) throws SQLException {
+        try {
+            
+            PreparedStatement predStatement
+                    = conn.prepareStatement("INSERT INTO notificaciones (userId, destinoId, titulo, descripcion, fecha) VALUES (?, ?, ?, ?, ?);");
+
+            String today = LocalDateTime.now().toString();  
+            
+            predStatement.setInt(1, note.getUserId());
+            predStatement.setInt(2, note.getDestinoId());
+            predStatement.setString(3, note.getTitulo());
+            predStatement.setString(4, note.getDescripcion());
+            predStatement.setString(5, note.getFecha());
+            predStatement.executeUpdate();           
+        } catch (SQLException ex) {            
+        }
+        
+    }    
 
     public boolean reservarPaseo(int paseoId, int userId, int r_tickets) throws SQLException {
         try {

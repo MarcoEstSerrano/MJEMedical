@@ -1,9 +1,9 @@
-create database MJEMedical;historial de medicina imagen
+create database MJEMedical;
 use MJEMedical;
 create table usuarios(
 	id int not null AUTO_INCREMENT,
     user_name varchar(50),
-    email varchar(50),multimedia
+    email varchar(50),
     pwd varchar(100),
     user_status int,
     PRIMARY KEY (id)

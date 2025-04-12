@@ -428,44 +428,11 @@ public class DbHelper {
         }
         return null;
     }
-    
-    public int programarcita(int medicId, String fecha, String especialidad) throws SQLException {
-        try {
-            PreparedStatement predStatement
-                    = conn.prepareStatement("INSERT INTO espaciosDisponibles(doctorId, fecha, especialidad, estado) VALUES (?, ?, ?, ?);");
 
+    public ResultSet getMedic(int medicId) throws SQLException {
+        try {
+            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM medicos WHERE id = ?;");
             predStatement.setInt(1, medicId);
-            predStatement.setString(2, fecha);
-            predStatement.setString(3, especialidad);
-            predStatement.setInt(4, 1);
-            
-
-            predStatement.executeUpdate();
-            PreparedStatement predStatement2
-            = conn.prepareStatement("SELECT id from espaciosDisponibles where fecha = ?;");
-            predStatement2.setString(1, fecha);
-            ResultSet rs = predStatement2.executeQuery();
-            
-            int id = 0;
-            
-            while(rs.next()){
-                id = rs.getInt("id");
-            }
-            
-            return id;
-
-        } catch (SQLException ex) {
-            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
-            return 0;
-        }
-    }
-    
-    
-    public ResultSet getespacio(int id) throws SQLException {
-        try {
-            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM espaciosDisponibles WHERE id = ?;");
-            predStatement.setInt(1, id);
-           
             return predStatement.executeQuery();
 
         } catch (SQLException ex) {
@@ -473,5 +440,165 @@ public class DbHelper {
         }
         return null;
     }
-    
+
+    public int programarcita(int medicId, String fecha, String especialidad, int citaId) throws SQLException {
+        try {
+            PreparedStatement predStatement
+                    = conn.prepareStatement("INSERT INTO espaciosDisponibles(doctorId, fecha, especialidad, estado, citaId) VALUES (?, ?, ?, ?, ?);");
+
+            predStatement.setInt(1, medicId);
+            predStatement.setString(2, fecha);
+            predStatement.setString(3, especialidad);
+            predStatement.setInt(4, 1);
+            predStatement.setInt(5, citaId);
+
+            predStatement.executeUpdate();
+            PreparedStatement predStatement2
+                    = conn.prepareStatement("SELECT id from espaciosDisponibles where fecha = ?;");
+            predStatement2.setString(1, fecha);
+            ResultSet rs = predStatement2.executeQuery();
+
+            int id = 0;
+
+            while (rs.next()) {
+                id = rs.getInt("id");
+            }
+
+            return id;
+
+        } catch (SQLException ex) {
+            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
+            return 0;
+        }
+    }
+
+    public ResultSet getespacio(int id) throws SQLException {
+        try {
+            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM espaciosDisponibles WHERE id = ?;");
+            predStatement.setInt(1, id);
+
+            return predStatement.executeQuery();
+
+        } catch (SQLException ex) {
+            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
+        }
+        return null;
+    }
+
+    public boolean cancelarCita(int espacioId) throws SQLException {
+        try {
+            PreparedStatement predStatement1
+                    = conn.prepareStatement("SELECT * from espaciosDisponibles WHERE id = ?;");
+            predStatement1.setInt(1, espacioId);
+
+            ResultSet rs = predStatement1.executeQuery();
+
+            while (rs.next()) {
+
+                if (rs.getInt("citaId") > 0) {
+                    PreparedStatement predStatement2
+                            = conn.prepareStatement("Delete from citas WHERE id = ?;");
+
+                    predStatement2.setInt(1, rs.getInt("citaId"));
+                    predStatement2.executeUpdate();
+                }
+            }
+
+            PreparedStatement predStatement3
+                    = conn.prepareStatement("Delete from espaciosDisponibles WHERE id = ?;");
+
+            predStatement3.setInt(1, espacioId);
+            predStatement3.executeUpdate();
+
+            return true;
+
+        } catch (SQLException ex) {
+            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
+            return false;
+        }
+    }
+
+    public ResultSet getEspaciosDisponibles(String especialidad) throws SQLException {
+        try {
+            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM espaciosDisponibles WHERE especialidad = ? AND estado = ?;");
+            predStatement.setString(1, especialidad);
+            predStatement.setInt(2, 1);
+
+            return predStatement.executeQuery();
+
+        } catch (SQLException ex) {
+            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
+        }
+        return null;
+    }
+
+    public ResultSet getEspaciosDisponibles(int espacioId) throws SQLException {
+        try {
+            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM espaciosDisponibles WHERE id = ?;");
+            predStatement.setInt(1, espacioId);
+
+            return predStatement.executeQuery();
+
+        } catch (SQLException ex) {
+
+        }
+        return null;
+    }
+
+    public boolean aceptarCita(int userId, ResultSet rsEspacioElegido, String motivo) throws SQLException {
+        try {
+            PreparedStatement predStatement
+                    = conn.prepareStatement("INSERT INTO citas(doctorId, userId, motivo, fechaHora, especialidad, estado, espacioId) VALUES (?, ?, ?, ?, ?, ?, ?);");
+
+            int doctorId = 0;
+            int espacioId = 0;
+            String fechaHora = "";
+            String especialidad = "";
+            int citaId = 0;
+
+            while (rsEspacioElegido.next()) {
+                doctorId = rsEspacioElegido.getInt("doctorId");
+                espacioId = rsEspacioElegido.getInt("id");
+                fechaHora = rsEspacioElegido.getString("fecha");
+                especialidad = rsEspacioElegido.getString("especialidad");
+            }
+            predStatement.setInt(1, doctorId);
+            predStatement.setInt(2, userId);
+            predStatement.setString(3, motivo);
+            predStatement.setString(4, fechaHora);
+            predStatement.setString(5, especialidad);
+            predStatement.setInt(6, 1);
+            predStatement.setInt(7, espacioId);
+
+            predStatement.executeUpdate();
+            //-----------------------------------------------------------------------------------------
+            PreparedStatement predStatement2 = conn.prepareStatement("SELECT id FROM citas WHERE fechaHora = ?;");
+            predStatement2.setString(1, fechaHora);
+            ResultSet cita = predStatement2.executeQuery();
+            while (cita.next()) {
+                citaId = cita.getInt("id");
+            }
+            //-----------------------------------------------------------------------------------------
+            PreparedStatement predStatement3
+                    = conn.prepareStatement("UPDATE espaciosDisponibles SET estado = ? WHERE id = ?;");
+
+            predStatement3.setInt(1, 0);
+            predStatement3.setInt(2, espacioId);
+            predStatement3.executeUpdate();
+            //-------------------------------------------------------------------------------------------
+            if (citaId > 0) {
+                PreparedStatement predStatement4
+                        = conn.prepareStatement("UPDATE espaciosDisponibles SET citaId = ? WHERE id = ?;");
+
+                predStatement4.setInt(1, citaId);
+                predStatement4.setInt(2, espacioId);
+                predStatement4.executeUpdate();
+            }
+
+            return true;
+
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
 }

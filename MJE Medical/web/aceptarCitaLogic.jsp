@@ -1,6 +1,7 @@
 
 <%@page import="app.model.pckg.Event"%>
 <%@page import="app.dataBase.pckg.DbHelper"%>
+<%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -107,32 +108,21 @@
 
     <body>
         <%
-            String email = (String) session.getAttribute("email");
-            if (email == null) {
-                request.setAttribute("errorMensage", "La sesión está inactiva, debes iniciar sesión.");
-                RequestDispatcher rd = request.getRequestDispatcher("ErrorHandler.jsp");
-                rd.forward(request, response);
-            }
+            int espacioId = Integer.parseInt(request.getParameter("espacio"));
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            String motivo = request.getParameter("motivo");
 
             DbHelper dbh = new DbHelper();
-            int userId = (int) session.getAttribute("userId");
-            String name = request.getParameter("txtName");
-            String description = request.getParameter("txtDescription");
-            String date = request.getParameter("txtDate");
-            String photo = "img/paseo.jpg";
-            String ubic = request.getParameter("txtUbication");
-            int tickets = Integer.parseInt(request.getParameter("txtTickets"));
+            ResultSet rs = dbh.getEspaciosDisponibles(espacioId);
 
-            Event event = new Event(userId, name, description, date, photo, ubic, tickets);
-
-            if (dbh.saveEvent(event)) {
+            if (dbh.aceptarCita(userId, rs, motivo)) {
         %>
         <div class="container d-flex justify-content-center">
             <div class="card shadow-lg p-4">
                 <div class="card-body">
-                    <h4 class="card-title text-success"><i class="fas fa-check-circle"></i> ¡Paseo publicado!</h4>
-                    <p class="card-text">Tu paseo se ha publicado con éxito.</p>
-                    <a href="CatalogoPaseos.jsp" class="btn btn-success w-100"><i class="fas fa-thumbs-up"></i> Aceptar</a>
+                    <h4 class="card-title text-success"><i class="fas fa-check-circle"></i> ¡Cita aceptada!</h4>
+                    <p class="card-text">Cita asignada con éxito.</p>
+                    <a href="home.jsp" class="btn btn-success w-100"><i class="fas fa-thumbs-up"></i> Aceptar</a>
                 </div>
             </div>
         </div>
@@ -141,8 +131,8 @@
             <div class="card shadow-lg p-4">
                 <div class="card-body">
                     <h4 class="card-title text-danger"><i class="fas fa-exclamation-circle"></i> ¡Error!</h4>
-                    <p class="card-text">Ocurrió un error al publicar el paseo. Inténtalo de nuevo...</p>
-                    <a href="Solicita.jsp" class="btn btn-danger w-100"><i class="fas fa-times"></i> Intentar de nuevo</a>
+                    <p class="card-text">Ocurrió un error al aceptar la cita. Inténtalo de nuevo...</p>
+                    <a href="home.jsp" class="btn btn-danger w-100"><i class="fas fa-times"></i> Intentar de nuevo</a>
                 </div>
             </div>
         </div>

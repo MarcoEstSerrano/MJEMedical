@@ -121,17 +121,14 @@
     </head>
     <body>
         <div class="hero-section">
-            <h1>Solicite su cita</h1>
+            <h1>Programar cita</h1>
             <p>Complete los datos</p>
         </div>
 
         <nav class="navbar navbar-expand-sm navbar-dark">
             <div class="container-fluid">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="home.jsp">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="Notificaciones.jsp">Notificaciones</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="Solicita.jsp">Solicitar cita</a></li>
-                    <li class="nav-item"><a class="nav-link" href="error.jsp">Historial de consulta</a></li>
+                    <li class="nav-item"><a class="nav-link" href="homeMedic.jsp">Home</a></li> 
                     <li class="nav-item"><a class="nav-link" href="myModal" data-bs-toggle="modal" data-bs-target="#myModal">Cerrar sesión</a></li>
                 </ul>
             </div>
@@ -160,8 +157,8 @@
         <div class="container mt-5 mb-5">
             <div class="d-flex justify-content-center align-items-center">
                 <div class="card shadow-lg p-4 rounded" style="max-width: 500px; width: 100%;">
-                    <h2 class="text-center text-primary mb-3"><b>Programar cita</b></h2>
-                    <h4 class="text-center text-primary mb-3">Llene los espacios en blanco</h4>
+                    <h2 class="text-center text-primary mb-3"><b>formulario de cita</b></h2>
+                    <h4 class="text-center text-primary mb-3"></h4>
                     <form action="ProCitaLogic.jsp">
                         <div class="mb-3">
                             <label class="form-label"><i class="fas fa-pen"></i> <b>Fecha</b></label>

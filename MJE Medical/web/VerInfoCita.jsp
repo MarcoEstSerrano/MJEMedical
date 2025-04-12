@@ -101,16 +101,16 @@
                    padding: 12px 20px;
                    font-size: 1rem;
                    flex: 1;">
-                    <b>Modificar</b>
+                    <b>Ver info pte</b>
                 </a>
 
-                <a data-bs-toggle="modal" data-bs-target="#cancelarReserva" 
+                <a href="CancelarReserva.jsp"
                    class="btn btn-danger btn-lg" 
                    style="border-radius: 20px; padding: 12px 20px; font-size: 1rem; flex: 1;" 
-                   <b>Cancelar reserva</b>
+                   <b>Cancelar cita</b>
                 </a>
 
-                <a href="MisReservas.jsp" 
+                <a href="homeMedic.jsp" 
                    class="btn btn-success btn-lg" 
                    style="border-radius: 20px; padding: 12px 20px; font-size: 1rem; flex: 1;" 
                    <b>Atras</b>

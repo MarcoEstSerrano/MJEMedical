@@ -71,6 +71,7 @@ create table notificaciones(
 	descripcion varchar(300),
 	fecha varchar(100),
     estado int,
+    espacioId int,
 	primary key(id)
 );
 

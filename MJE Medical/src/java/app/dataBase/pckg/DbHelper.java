@@ -220,7 +220,7 @@ public class DbHelper {
         try {
 
             PreparedStatement predStatement
-                    = conn.prepareStatement("INSERT INTO notificaciones (userId, destinoId, titulo, descripcion, fecha, estado) VALUES (?, ?, ?, ?, ?, ?);");
+                    = conn.prepareStatement("INSERT INTO notificaciones (userId, destinoId, titulo, descripcion, fecha, estado, espacioId) VALUES (?, ?, ?, ?, ?, ?, ?);");
 
             String today = LocalDateTime.now().toString();
 
@@ -230,6 +230,7 @@ public class DbHelper {
             predStatement.setString(4, note.getDescripcion());
             predStatement.setString(5, note.getFecha());
             predStatement.setInt(6, note.getEstado());
+            predStatement.setInt(7, note.getEspacioId());
             predStatement.executeUpdate();
         } catch (SQLException ex) {
         }
@@ -427,4 +428,50 @@ public class DbHelper {
         }
         return null;
     }
+    
+    public int programarcita(int medicId, String fecha, String especialidad) throws SQLException {
+        try {
+            PreparedStatement predStatement
+                    = conn.prepareStatement("INSERT INTO espaciosDisponibles(doctorId, fecha, especialidad, estado) VALUES (?, ?, ?, ?);");
+
+            predStatement.setInt(1, medicId);
+            predStatement.setString(2, fecha);
+            predStatement.setString(3, especialidad);
+            predStatement.setInt(4, 1);
+            
+
+            predStatement.executeUpdate();
+            PreparedStatement predStatement2
+            = conn.prepareStatement("SELECT id from espaciosDisponibles where fecha = ?;");
+            predStatement2.setString(1, fecha);
+            ResultSet rs = predStatement2.executeQuery();
+            
+            int id = 0;
+            
+            while(rs.next()){
+                id = rs.getInt("id");
+            }
+            
+            return id;
+
+        } catch (SQLException ex) {
+            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
+            return 0;
+        }
+    }
+    
+    
+    public ResultSet getespacio(int id) throws SQLException {
+        try {
+            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM espaciosDisponibles WHERE id = ?;");
+            predStatement.setInt(1, id);
+           
+            return predStatement.executeQuery();
+
+        } catch (SQLException ex) {
+            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
+        }
+        return null;
+    }
+    
 }

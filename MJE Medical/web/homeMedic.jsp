@@ -123,43 +123,6 @@
                 color: white !important; /* Descripción en blanco */
             }
 
-            .btn-primary {
-                font-size: 1.2rem;
-                font-weight: bold;
-                padding: 12px;
-                background-color: #28a745;
-                border: none;
-            }
-
-            .btn-primary:hover {
-                background-color: #218838;
-                transition: background-color 0.3s ease;
-            }
-
-            /* Mejorar la visibilidad del modal */
-            .modal-header {
-                background-color: #dc3545;
-                color: white;
-            }
-
-            .modal-body {
-                color: black;
-                font-weight: bold;
-            }
-
-            .modal-footer .btn-danger {
-                background-color: #dc3545;
-                color: white;
-            }
-
-            .modal-footer .btn-danger:hover {
-                background-color: #c82333;
-            }
-
-            .modal-content {
-                border-radius: 10px;
-            }
-
         </style>
     </head>
     <body>
@@ -172,11 +135,9 @@
                 rd.forward(request, response);
             }
 
-            int userId = (int) session.getAttribute("userId");
+            int userId = (int) session.getAttribute("medicId");
             DbHelper dbh = new DbHelper();
             
-            Notificacion noti = new Notificacion(1, 1, "Prueba1", "Prueba de notis", "20/20/20",1);
-            dbh.saveNotification(noti);
             
             ResultSet notis = dbh.getNotificaciones(userId);
         %>
@@ -232,7 +193,7 @@
                         <img src="img/notificaciones.jpg" class="card-img-top" />
                         <div class="card-body">
                             <h5 class="card-title">Notificaciones</h5>
-                            <p class="card-text">Descripcion: Mantente al día</p>
+                            <p class="card-text"></p>
                             <div class="mt-auto">
                                 <a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" class="btn btn-primary w-100"><b>Seleccionar</b></a>
                             </div>
@@ -246,10 +207,10 @@
                     <div class="card">
                         <img src="img/solic.jpeg" class="card-img-top" />
                         <div class="card-body">
-                            <h5 class="card-title">Solicitar cita</h5>
+                            <h5 class="card-title">Programar una cita</h5>
                             <p class="card-text">Descripcion: Agrega, modifica o cancela tus citas.</p>
                             <div class="mt-auto">
-                                <a href="Solicita.jsp" class="btn btn-primary w-100"><b>Seleccionar</b></a>
+                                <a href="ProgramarCita.jsp" class="btn btn-primary w-100"><b>Seleccionar</b></a>
                             </div>
                         </div>
                     </div>
@@ -261,7 +222,7 @@
                     <div class="card">
                         <img src="img/historial.jpg" class="card-img-top" />
                         <div class="card-body">
-                            <h5 class="card-title">Historial de consulta</h5>
+                            <h5 class="card-title">Historial de consulta de pacientes</h5>
                             <p class="card-text">Descripcion: Revisa tus citas anteriores</p>
                             <div class="mt-auto">
                                 <a href="Historial.jsp" class="btn btn-primary w-100"><b>Seleccionar</b></a>
@@ -285,7 +246,7 @@
                     if(notis.next()){
                         while (notis.next()) {%>        
                             <li class="list-group-item"><%=notis.getString("titulo")%> / <%=notis.getString("descripcion")%>
-                                <a href="quitarNotificacion.jsp?id=<%=notis.getString("id")%>" class="btn btn-primary w-10"><b>Listo</b></a>
+                                <a href="VerInfoCita.jsp?id=<%=notis.getString("espacioId")%>" class="btn btn-primary w-10"><b>Ver</b></a>
                             </li>
                     <% 
                         }

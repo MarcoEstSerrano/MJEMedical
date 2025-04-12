@@ -9,6 +9,17 @@ public class Notificacion {
     private String descripcion;
     private String fecha;
     private int estado;
+    private int espacioId;
+
+    public Notificacion(int userId, int destinoId, String titulo, String descripcion, String fecha, int estado, int espacioId) {
+        this.userId = userId;
+        this.destinoId = destinoId;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.fecha = fecha;
+        this.estado = estado;
+        this.espacioId = espacioId;
+    }
 
     public Notificacion(int id, int userId, int destinoId, String titulo, String descripcion, String fecha, int estado) {
         this.id = id;
@@ -83,6 +94,14 @@ public class Notificacion {
 
     public void setEstado(int estado) {
         this.estado = estado;
+    }
+
+    public int getEspacioId() {
+        return espacioId;
+    }
+
+    public void setEspacioId(int espacioId) {
+        this.espacioId = espacioId;
     }
     
     

@@ -193,7 +193,7 @@
                         <img src="img/notificaciones.jpg" class="card-img-top" />
                         <div class="card-body">
                             <h5 class="card-title">Notificaciones</h5>
-                            <p class="card-text"></p>
+                            <p class="card-text">Historial de consulta de pacientes y notificaciones</p>
                             <div class="mt-auto">
                                 <a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" class="btn btn-primary w-100"><b>Seleccionar</b></a>
                             </div>
@@ -216,20 +216,6 @@
                     </div>
                 </div>
 
-
-
-                <div class="col mb-4">
-                    <div class="card">
-                        <img src="img/historial.jpg" class="card-img-top" />
-                        <div class="card-body">
-                            <h5 class="card-title">Historial de consulta de pacientes</h5>
-                            <p class="card-text">Descripcion: Revisa tus citas anteriores</p>
-                            <div class="mt-auto">
-                                <a href="Historial.jsp" class="btn btn-primary w-100"><b>Seleccionar</b></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
             </div>
         </div>

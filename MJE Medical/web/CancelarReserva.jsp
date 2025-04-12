@@ -106,25 +106,18 @@
     </head>
     <body>
         <%
-            int reservId = Integer.parseInt(request.getParameter("reservId"));
-            int eventId = Integer.parseInt(request.getParameter("eventId"));
+            int espacioId = Integer.parseInt(request.getParameter("espacioId"));
 
             DbHelper dbh = new DbHelper();
 
-            ResultSet rs = dbh.getReservFullInfo(reservId);
-            int newTickets = 0;
-            while (rs.next()) {
-                newTickets = rs.getInt("e_tickets") + rs.getInt("r_tickets");
-            }
-
-            if (dbh.cancelarReserva(reservId) && dbh.actualizarTickets(eventId, newTickets)) {
+            if (dbh.cancelarCita(espacioId)) {
         %>
         <div class="container d-flex justify-content-center">
             <div class="card shadow-lg p-4">
                 <div class="card-body">
-                    <h4 class="card-title text-success"><i class="fas fa-check-circle"></i> ¡Reserva cancelada!</h4>
-                    <p class="card-text">Tu reserva se ha cancelado con éxito.</p>
-                    <a href="MisReservas.jsp" class="btn btn-success w-100"><i class="fas fa-thumbs-up"></i>Aceptar</a>
+                    <h4 class="card-title text-success"><i class="fas fa-check-circle"></i> ¡Cita cancelada!</h4>
+                    <p class="card-text">Tu cita se ha cancelado con éxito.</p>
+                    <a href="homeMedic.jsp" class="btn btn-success w-100"><i class="fas fa-thumbs-up"></i>Aceptar</a>
                 </div>
             </div>
         </div>
@@ -133,8 +126,8 @@
             <div class="card shadow-lg p-4">
                 <div class="card-body">
                     <h4 class="card-title text-danger"><i class="fas fa-exclamation-circle"></i> ¡Error!</h4>
-                    <p class="card-text">Ocurrió un error al cancelar la reserva. Inténtalo de nuevo...</p>
-                    <a href="MisReservas.jsp" class="btn btn-danger w-100"><i class="fas fa-times"></i>Intentar de nuevo</a>
+                    <p class="card-text">Ocurrió un error al cancelar la cita. Inténtalo de nuevo...</p>
+                    <a href="homeMedic.jsp" class="btn btn-danger w-100"><i class="fas fa-times"></i>Intentar de nuevo</a>
                 </div>
             </div>
         </div>

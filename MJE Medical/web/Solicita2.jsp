@@ -1,11 +1,18 @@
 <%@page import="app.dataBase.pckg.DbHelper"%>
 <%@page import="app.model.pckg.Event"%>
+<%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
+    int userId = Integer.parseInt(String.valueOf(session.getAttribute("userId")));
     String motivo = request.getParameter("txtMotivo");
     String descripcion = request.getParameter("txtDescription");
     String especialidad = request.getParameter("tipo");
+
+    DbHelper dbh = new DbHelper();
+    ResultSet rs = dbh.getEspaciosDisponibles(especialidad);
+
+
 %>
 <!DOCTYPE html>
 <html>
@@ -94,7 +101,7 @@
                 font-weight: bold;
                 color: #007BFF; /* Azul como color médico */
             }
-            
+
             .modal-header {
                 background-color: #dc3545;
                 color: white;
@@ -138,7 +145,7 @@
                 </ul>
             </div>
         </nav>
-        
+
         <div class="modal" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -163,18 +170,31 @@
             <div class="d-flex justify-content-center align-items-center">
                 <div class="card shadow-lg p-4 rounded" style="max-width: 500px; width: 100%;">
                     <h4 class="text-center text-primary mb-3"><b>Citas diponibles</b></h4>
-                    <form action="CreateEventLogic.jsp">
+
+                    <form action="aceptarCitaLogic.jsp">
                         <h4>Especialidad elegida:<%=especialidad%></h4>
                         <div class="mb-3">
                             <label class="form-label"><i class="fas fa-ticket-alt"></i> <b>Especialidad</b></label>
-                            <select name="tipo" id="tipo" required class="form-select">
-                                <option value="Medicina General">Doctor: Gerardo Arias. Fecha|Hora: 20/20/2000 | 8:00</option>
-                                <option value="Medicina General">20/10/2000 | 8:00</option>
-                                <option value="Medicina General">20/9/2000 | 8:00</option>
- 
-                            </select>
+                            <select name="espacio" id="espacio" required class="form-select">
+                                <%
+                                    while (rs.next()) {
 
+                                        ResultSet medico = dbh.getMedic(rs.getInt("doctorId"));
+
+                                        String nombreMedico = "";
+                                        while (medico.next()) {
+                                            nombreMedico = medico.getString("nombre");
+                                        }
+                                %>               
+                                <option value="<%=rs.getInt("id")%>">
+                                    Doctor: <%=nombreMedico%> Fecha|Hora: <%=rs.getString("fecha")%></option>
+
+                                <%}
+                                %>
+                            </select>
                         </div>
+                        <input type="hidden" name="userId" value="<%=userId%>">
+                        <input type="hidden" name="motivo" value="<%=motivo%>">
                         <button type="submit" class="btn btn-primary w-100"><i class="fas fa-save"></i> Solicitar</button>
                     </form>
                 </div>

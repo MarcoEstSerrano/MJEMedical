@@ -51,6 +51,7 @@ create table citas(
 	fechaHora varchar(50),
     especialidad varchar(100),
 	estado int,
+    espacioId int,
     primary key(id)
 );
 
@@ -60,6 +61,7 @@ create table espaciosDisponibles(
 	fecha varchar(50),
 	especialidad varchar(100),
     estado int,
+    citaId int,
     primary key(id)
 );
 

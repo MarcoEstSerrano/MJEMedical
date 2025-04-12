@@ -15,7 +15,7 @@
     String especialidad = request.getParameter("txtEspecialidad");
     DbHelper db = new DbHelper();
     
-    int espacioId = db.programarcita(medicId, fecha, especialidad);
+    int espacioId = db.programarcita(medicId, fecha, especialidad, 0);
 
     if (espacioId > 0) {
 

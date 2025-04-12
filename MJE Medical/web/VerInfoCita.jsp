@@ -44,55 +44,37 @@
     </head>
     <body>
         <%
-        int espacioId = Integer.parseInt (request.getParameter("id"));
-        DbHelper db = new DbHelper();
-        ResultSet rs = db.getespacio(espacioId);
-        
-
-
-
-
-
+            int espacioId = Integer.parseInt(request.getParameter("id"));
+            DbHelper db = new DbHelper();
+            ResultSet rs = db.getespacio(espacioId);
 
         %>
-        
-        
-        
-        
+
         <div class="card mb-5 shadow-lg mx-auto mt-5" style="width: 600px;
              border-radius: 10px;
              overflow: hidden;">
             <div class="card-header bg-success text-white">
                 <h1 class="card-title text-center" style="font-size: 2rem;
                     font-weight: bold;
-                     object-fit: cover;
-                     border-radius: 10px 10px 0 0;" />
+                    object-fit: cover;
+                    border-radius: 10px 10px 0 0;" />
             </div>
-            
-            
-            
-            
 
             <div class="card-body p-4">
-                
+
                 <%
-                    
-                while(rs.next()){
-                
+                    while (rs.next()) {
                 %>
-                
-                
-                <p class="card-text"><i class="fas fa-info-circle" style="color: #5c6bc0;"></i> <b>Especialidad: <%=rs.getString("especialidad") %></b></p>
-                <p class="card-text"><i class="fas fa-calendar-day" style="color: #ff7043;"></i> <b>Fecha:<%=rs.getString("fecha") %></b></p>
-                
+
+                <p class="card-text"><i class="fas fa-info-circle" style="color: #5c6bc0;"></i> <b>Especialidad: <%=rs.getString("especialidad")%></b></p>
+                <p class="card-text"><i class="fas fa-calendar-day" style="color: #ff7043;"></i> <b>Fecha:<%=rs.getString("fecha")%></b></p>
+
                 <%
-                    
                     }
                 %>
-                
+
             </div>
-            
-            
+
             <div class="card-footer d-flex justify-content-between align-items-center p-3" style="background-color: #f8f9fa;
                  border-top: 1px solid #ddd;
                  gap: 10px;">
@@ -104,7 +86,7 @@
                     <b>Ver info pte</b>
                 </a>
 
-                <a href="CancelarReserva.jsp"
+                <a href="CancelarReserva.jsp?espacioId=<%=espacioId%>"
                    class="btn btn-danger btn-lg" 
                    style="border-radius: 20px; padding: 12px 20px; font-size: 1rem; flex: 1;" 
                    <b>Cancelar cita</b>

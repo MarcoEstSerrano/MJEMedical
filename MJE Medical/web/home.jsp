@@ -76,21 +76,21 @@
                 color: darkred !important;
             }
 
-            /* Estilos de los botones personalizados */
-            .btn-custom {
-                font-weight: bold;
+            .btn-primary {
                 font-size: 1.2rem;
-                padding: 15px;
-                background-color: #007bff;
-                color: skyblue;
+                font-weight: bold;
+                padding: 12px;
+                background-color: lightblueblue; /* azul celeste */
+                color: white;
+                border: none;
                 border-radius: 5px;
-                text-transform: uppercase;
             }
 
-            .btn-custom:hover {
-                background-color: #0056b3;
+            .btn-primary:hover {
+                background-color: #00b5e2; /* azul celeste más oscuro */
                 transition: background-color 0.3s ease;
             }
+
 
             /* Diseño de las tarjetas */
             .card {
@@ -122,19 +122,7 @@
                 font-weight: 300;
                 color: white !important; /* Descripción en blanco */
             }
-
-            .btn-primary {
-                font-size: 1.2rem;
-                font-weight: bold;
-                padding: 12px;
-                background-color: #28a745;
-                border: none;
-            }
-
-            .btn-primary:hover {
-                background-color: #218838;
-                transition: background-color 0.3s ease;
-            }
+  
 
             /* Mejorar la visibilidad del modal */
             .modal-header {
@@ -174,10 +162,10 @@
 
             int userId = (int) session.getAttribute("userId");
             DbHelper dbh = new DbHelper();
-            
-            Notificacion noti = new Notificacion(1, 1, "Prueba1", "Prueba de notis", "20/20/20",1);
+
+            Notificacion noti = new Notificacion(1, 1, "Prueba1", "Prueba de notis", "20/20/20", 1);
             dbh.saveNotification(noti);
-            
+
             ResultSet notis = dbh.getNotificaciones(userId);
         %>
 
@@ -266,7 +254,7 @@
                             <div class="mt-auto">
                                 <a href="HistorialConsulta.jsp?userId=<%=userId%>" class="btn btn-primary w-100"><b>Seleccionar</b></a>
                             </div>
-                     </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -279,19 +267,19 @@
             </div>
             <div class="offcanvas-body">
                 <ul class="list-group">
-                    
+
                     <%
-                    if(notis.next()){
-                        while (notis.next()) {%>        
-                            <li class="list-group-item"><%=notis.getString("titulo")%> / <%=notis.getString("descripcion")%>
-                                <a href="quitarNotificacion.jsp?id=<%=notis.getString("id")%>" class="btn btn-primary w-10"><b>Listo</b></a>
-                            </li>
-                    <% 
+                        if (notis.next()) {
+                            while (notis.next()) {%>        
+                    <li class="list-group-item"><%=notis.getString("titulo")%> / <%=notis.getString("descripcion")%>
+                        <a href="quitarNotificacion.jsp?id=<%=notis.getString("id")%>" class="btn btn-primary w-10"><b>Listo</b></a>
+                    </li>
+                    <%
                         }
-                    }else{
+                    } else {
                     %>  
-                      <h3>Sin notificaciones</h3>
-                    <% } %>     
+                    <h3>Sin notificaciones</h3>
+                    <% }%>     
                 </ul>
             </div>
         </div>

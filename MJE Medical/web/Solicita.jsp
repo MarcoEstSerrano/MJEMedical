@@ -33,7 +33,17 @@
             }
 
             .navbar-nav .nav-link:hover {
-                color: #FFD700; /* Color dorado al pasar el mouse */
+                color: lightblue; /* Color dorado al pasar el mouse */
+            }
+            
+            /* Nuevo estilo para el enlace "Cerrar sesión" */
+            .navbar-nav .nav-link[data-bs-target="#myModal"] {
+                color: red !important;
+                font-weight: bold;
+            }
+
+            .navbar-nav .nav-link[data-bs-target="#myModal"]:hover {
+                color: darkred !important;
             }
 
             .hero-section {
@@ -72,15 +82,18 @@
             }
 
             .btn-primary {
-                background-color: #28a745; /* Verde hospitalario */
-                border-color: #28a745;
+                font-size: 1.2rem;
                 font-weight: bold;
-                border-radius: 10px;
+                padding: 5px;
+                background-color: blue; /* azul celeste */
+                color: white;
+                border: none;
+                border-radius: 5px;
             }
 
             .btn-primary:hover {
-                background-color: #218838;
-                border-color: #1e7e34;
+                background-color: #00b5e2; /* azul celeste más oscuro */
+                transition: background-color 0.3s ease;
             }
 
             .card-body {
@@ -92,7 +105,7 @@
                 font-weight: bold;
                 color: #007BFF; /* Azul como color médico */
             }
-            
+
             .modal-header {
                 background-color: #dc3545;
                 color: white;
@@ -129,14 +142,11 @@
             <div class="container-fluid">
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link" href="home.jsp">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="Notificaciones.jsp">Notificaciones</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="Solicita.jsp">Solicitar cita</a></li>
-                    <li class="nav-item"><a class="nav-link" href="error.jsp">Historial de consulta</a></li>
                     <li class="nav-item"><a class="nav-link" href="myModal" data-bs-toggle="modal" data-bs-target="#myModal">Cerrar sesión</a></li>
                 </ul>
             </div>
         </nav>
-        
+
         <div class="modal" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content">

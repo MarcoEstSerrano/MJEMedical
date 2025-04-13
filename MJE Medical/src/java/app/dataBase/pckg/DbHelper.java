@@ -601,4 +601,43 @@ public class DbHelper {
             return false;
         }
     }
+    
+    public ResultSet getCitas(int userId) throws SQLException {
+        try {
+            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM citas WHERE userId = ?;");
+            predStatement.setInt(1, userId);
+
+            return predStatement.executeQuery();
+
+        } catch (SQLException ex) {
+
+        }
+        return null;
+    }
+    
+    public ResultSet getCita(int citaId) throws SQLException {
+        try {
+            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM citas WHERE id = ?;");
+            predStatement.setInt(1, citaId);
+
+            return predStatement.executeQuery();
+
+        } catch (SQLException ex) {
+
+        }
+        return null;
+    }
+    
+    public ResultSet getUser(int userId) throws SQLException {
+        try {
+            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM usuarios WHERE id = ?;");
+            predStatement.setInt(1, userId);
+
+            return predStatement.executeQuery();
+
+        } catch (SQLException ex) {
+
+        }
+        return null;
+    }
 }

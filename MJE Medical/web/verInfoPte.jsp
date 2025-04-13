@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        <title>Inicio Sesion</title>
+        <title>Info paciente</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -165,29 +165,46 @@
     <body>
 
         <%
-            String email = (String) session.getAttribute("email");
-            if (email == null) {
-                request.setAttribute("errorMensage", "La sesion esta inactiva, debes iniciar sesion.");
-                RequestDispatcher rd = request.getRequestDispatcher("ErrorHandler.jsp");
-                rd.forward(request, response);
+            int espacioId = Integer.parseInt(request.getParameter("espacioId"));
+
+            DbHelper dbh = new DbHelper();
+            ResultSet rs = dbh.getespacio(espacioId);
+
+            int ocupado = 1;
+            int citaId = 0;
+            while (rs.next()) {
+                ocupado = rs.getInt("estado");
+                citaId = rs.getInt("citaId");
             }
 
-            int userId = (int) session.getAttribute("userId");
-            DbHelper dbh = new DbHelper();
+            if (ocupado == 1) { //Es que esta sin ocupar
+        %>
+            <div class="container d-flex justify-content-center">
+                <div class="card shadow-lg p-4">
+                    <div class="card-body">
+                        <h4 class="card-title text-success"><i class="fas fa-check-circle"></i> ¡Espacio libre!</h4>
+                        <p class="card-text">El espacio aun no ha sido ocupado por un paciente. Intenta mas tarde.</p>
+                        <a href="homeMedic.jsp" class="btn btn-success w-100"><i class="fas fa-thumbs-up"></i>Aceptar</a>
+                    </div>
+                </div>
+            </div>
+        <% }else{
+            ResultSet cita = dbh.getCita(citaId);
+            int userId = 0;
+            while(cita.next()){
+                userId = cita.getInt("userId");
+            }
             
-            Notificacion noti = new Notificacion(1, 1, "Prueba1", "Prueba de notis", "20/20/20",1);
-            dbh.saveNotification(noti);
-            
-            ResultSet notis = dbh.getNotificaciones(userId);
+            ResultSet usuario = dbh.getUser(userId);
         %>
 
-        <!-- Encabezado -->
+
         <div class="header">
             <h3>MJE Medical</h3>
             <p>Su salud en nuestras manos</p>
         </div>
 
-        <!-- Barra de navegación -->
+
         <nav class="navbar navbar-expand-sm navbar-dark">
             <div class="container-fluid">
                 <ul class="navbar-nav">
@@ -202,7 +219,7 @@
             </div>
         </nav>
 
-        <!-- Modal para confirmar cierre de sesión -->
+
         <div class="modal" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -223,78 +240,20 @@
             </div>
         </div>
 
-        <!-- Contenedor de eventos -->
-        <div class="container mt-5">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 justify-content-center">
+        <div class="card-body p-4">
 
-                <div class="col mb-4">
-                    <div class="card">
-                        <img src="img/notificaciones.jpg" class="card-img-top" />
-                        <div class="card-body">
-                            <h5 class="card-title">Notificaciones</h5>
-                            <p class="card-text">Descripcion: Mantente al día</p>
-                            <div class="mt-auto">
-                                <a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" class="btn btn-primary w-100"><b>Seleccionar</b></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <%while (usuario.next()) {
+            %>
 
+            <p class="card-text"><i  style="color: #5c6bc0;"></i> <b>Usuario: <%=usuario.getString("user_name")%></b></p>
+            <p class="card-text"><i  style="color: #ff7043;"></i> <b>Email: <%=usuario.getString("email")%></b></p>
+            <a href="HistorialConsultaMedic.jsp?userId=<%=usuario.getInt("id")%>" class="btn btn-danger">Info paciente</a>
+            <%
+                }
+            %>
 
-
-                <div class="col mb-4">
-                    <div class="card">
-                        <img src="img/solic.jpeg" class="card-img-top" />
-                        <div class="card-body">
-                            <h5 class="card-title">Solicitar cita</h5>
-                            <p class="card-text">Descripcion: Agrega, modifica o cancela tus citas.</p>
-                            <div class="mt-auto">
-                                <a href="Solicita.jsp" class="btn btn-primary w-100"><b>Seleccionar</b></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="col mb-4">
-                    <div class="card">
-                        <img src="img/historial.jpg" class="card-img-top" />
-                        <div class="card-body">
-                            <h5 class="card-title">Historial de consulta</h5>
-                            <p class="card-text">Descripcion: Revisa tus citas anteriores</p>
-                            <div class="mt-auto">
-                                <a href="HistorialConsulta.jsp?userId=<%=userId%>" class="btn btn-primary w-100"><b>Seleccionar</b></a>
-                            </div>
-                     </div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
-
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-            <div class="offcanvas-header">
-                <h5 id="offcanvasRightLabel">Notificaciones</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <ul class="list-group">
-                    
-                    <%
-                    if(notis.next()){
-                        while (notis.next()) {%>        
-                            <li class="list-group-item"><%=notis.getString("titulo")%> / <%=notis.getString("descripcion")%>
-                                <a href="quitarNotificacion.jsp?id=<%=notis.getString("id")%>" class="btn btn-primary w-10"><b>Listo</b></a>
-                            </li>
-                    <% 
-                        }
-                    }else{
-                    %>  
-                      <h3>Sin notificaciones</h3>
-                    <% } %>     
-                </ul>
-            </div>
-        </div>
-
+<%}%>
     </body>
 </html>

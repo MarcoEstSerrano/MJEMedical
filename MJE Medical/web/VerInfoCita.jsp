@@ -79,7 +79,7 @@
                  border-top: 1px solid #ddd;
                  gap: 10px;">
 
-                <a data-bs-toggle="modal" data-bs-target="#modificarReserva" class="btn btn-warning btn-lg" style="border-radius: 20px;
+                <a href="verInfoPte.jsp?espacioId=<%=espacioId%>" class="btn btn-warning btn-lg" style="border-radius: 20px;
                    padding: 12px 20px;
                    font-size: 1rem;
                    flex: 1;">

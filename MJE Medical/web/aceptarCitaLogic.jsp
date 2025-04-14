@@ -1,4 +1,6 @@
 
+<%@page import="java.time.LocalDate"%>
+<%@page import="app.model.pckg.Notificacion"%>
 <%@page import="app.model.pckg.Event"%>
 <%@page import="app.dataBase.pckg.DbHelper"%>
 <%@page import="java.sql.ResultSet"%>
@@ -113,9 +115,30 @@
             String motivo = request.getParameter("motivo");
 
             DbHelper dbh = new DbHelper();
-            ResultSet rs = dbh.getEspaciosDisponibles(espacioId);
+            ResultSet rs = dbh.getEspacio(espacioId);
 
             if (dbh.aceptarCita(userId, rs, motivo)) {
+                ResultSet rsActualizado = dbh.getEspacio(espacioId);
+                while (rsActualizado.next()) {
+
+                    String titulo = "Cita Aceptada";
+                    String descripcion = rsActualizado.getString("especialidad") + ": " + rsActualizado.getString("fecha");
+                    LocalDate fechaActual = LocalDate.now();
+                    String fechaGenerada = String.valueOf(fechaActual);
+
+                    //---Noti user-----------------------------------------------------------
+                    Notificacion notiUser = new Notificacion(userId, userId, titulo, descripcion,
+                            fechaGenerada, 1, espacioId, "usuario");
+                    dbh.saveNotification(notiUser);
+                    //---Noti medic----------------------------------------------------------
+                    ResultSet rsCita = dbh.getCita(rsActualizado.getInt("citaId"));
+                    while (rsCita.next()) {
+                        Notificacion notiMedic = new Notificacion(userId, rsCita.getInt("doctorid"), titulo, descripcion,
+                                fechaGenerada, 1, espacioId, "medico");
+                        dbh.saveNotification(notiMedic);
+                    }
+                }
+
         %>
         <div class="container d-flex justify-content-center">
             <div class="card shadow-lg p-4">

@@ -1,4 +1,6 @@
 
+<%@page import="app.model.pckg.Notificacion"%>
+<%@page import="java.time.LocalDate"%>
 <%@page import="app.dataBase.pckg.DbHelper"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.ResultSet"%>
@@ -111,6 +113,18 @@
             DbHelper dbh = new DbHelper();
 
             if (dbh.cancelarCita(espacioId)) {
+
+                ResultSet rs = dbh.getEspacio(espacioId);
+                while (rs.next()) {
+                    String titulo = "Espacio eliminado";
+                    String descripcion = rs.getString("especialidad") + ": " + rs.getString("fecha");
+                    LocalDate fechaActual = LocalDate.now();
+                    String fechaGenerada = String.valueOf(fechaActual);
+
+                    Notificacion notiMedic = new Notificacion(rs.getInt("doctorId"), rs.getInt("doctorId"), titulo, descripcion,
+                            fechaGenerada, 1, 0, "medico");
+                    dbh.saveNotification(notiMedic);
+                }
         %>
         <div class="container d-flex justify-content-center">
             <div class="card shadow-lg p-4">

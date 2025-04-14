@@ -62,13 +62,20 @@
 
             <div class="card-body p-4">
 
+                
                 <%
-                    while (rs.next()) {
+                    if(espacioId != 0){
+                        while (rs.next()) {
                 %>
 
                 <p class="card-text"><i class="fas fa-info-circle" style="color: #5c6bc0;"></i> <b>Especialidad: <%=rs.getString("especialidad")%></b></p>
                 <p class="card-text"><i class="fas fa-calendar-day" style="color: #ff7043;"></i> <b>Fecha:<%=rs.getString("fecha")%></b></p>
 
+                <%
+                        }
+                    }else{
+                    %>
+                    <p class="card-text"><i class="fas fa-info-circle" style="color: #5c6bc0;"></i> <b>Sin contenido adicional</b></p>
                 <%
                     }
                 %>
@@ -79,6 +86,7 @@
                  border-top: 1px solid #ddd;
                  gap: 10px;">
 
+                <%if(espacioId > 0){%>
                 <a href="verInfoPte.jsp?espacioId=<%=espacioId%>" class="btn btn-warning btn-lg" style="border-radius: 20px;
                    padding: 12px 20px;
                    font-size: 1rem;
@@ -92,6 +100,7 @@
                    <b>Cancelar cita</b>
                 </a>
 
+                   <%}%>
                 <a href="homeMedic.jsp" 
                    class="btn btn-success btn-lg" 
                    style="border-radius: 20px; padding: 12px 20px; font-size: 1rem; flex: 1;" 

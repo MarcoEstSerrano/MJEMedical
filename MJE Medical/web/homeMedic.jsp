@@ -235,16 +235,16 @@
             int userId = (int) session.getAttribute("medicId");
             DbHelper dbh = new DbHelper();
 
-            ResultSet notis = dbh.getNotificaciones(userId);
+            ResultSet notis = dbh.getNotificaciones(userId, "medico");
         %>
 
-        <!-- Encabezado -->
+
         <div class="header">
             <h3>MJE Medical</h3>
             <p>Sistema de Médico</p>
         </div>
 
-        <!-- Barra de navegación -->
+
         <nav class="navbar navbar-expand-sm navbar-dark">
             <div class="container-fluid">
                 <ul class="navbar-nav">
@@ -259,7 +259,7 @@
             </div>
         </nav>
 
-        <!-- Modal para confirmar cierre de sesión -->
+
         <div class="modal" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -280,7 +280,7 @@
             </div>
         </div>
 
-        <!-- Contenedor de eventos -->
+
         <div class="container mt-5">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 justify-content-center">
 
@@ -323,7 +323,7 @@
             </div>
             <div class="offcanvas-body">
                 <ul class="list-group">
-
+                    
                     <%
                         if (notis.next()) {
                             while (notis.next()) {%>        

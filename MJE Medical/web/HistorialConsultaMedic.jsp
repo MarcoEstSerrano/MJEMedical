@@ -6,7 +6,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Historial citas paciente</title>
+        <title>Historial citas Medico</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
@@ -30,25 +30,39 @@
             }
 
             .navbar-nav .nav-link:hover {
-                color: #FFD700; /* Color dorado al pasar el mouse */
+                color: lightblue; /* Color dorado al pasar el mouse */
+            }
+            
+            .navbar-nav .nav-link[data-bs-target="#myModal"] {
+                color: #ff4d4d !important;
+            }
+
+            .navbar-nav .nav-link[data-bs-target="#myModal"]:hover {
+                color: darkred !important;
             }
 
             .hero-section {
-                background: rgba(0, 0, 0, 0.6);
-                padding: 50px 0; /* Aumenta un poco la altura */
+                background-color: rgba(0, 0, 0, 0.5);
                 text-align: center;
+                padding: 60px 20px;
+                margin-bottom: -2px;
+                border-bottom: 2px solid skyblue;
             }
 
-            .hero-section h1 {
-                font-size: 3.5rem; /* Ajuste tamaño título */
-                color: #FFFFFF;
+            .hero-section h2 {
+                font-size: 2.8rem;
+                color: #00d4ff;
                 font-weight: bold;
+                margin-bottom: 15px;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             }
 
             .hero-section p {
-                font-size: 1.5rem;
-                color: #FFFFFF;
+                font-size: 1.2rem;
+                color: #f0f0f0;
+                margin-bottom: 0;
             }
+            
 
             .card {
                 background-color: rgba(255, 255, 255, 0.8); /* Fondo más suave */
@@ -117,17 +131,17 @@
         </style>
     </head>
     <body>
-        
+
         <%
             int userId = Integer.parseInt(request.getParameter("userId"));
-        
+
             DbHelper dbh = new DbHelper();
             ResultSet rs = dbh.getCitas(userId);
 
         %>
         <div class="hero-section">
-            <h1>Solicite su cita</h1>
-            <p>Complete los datos</p>
+            <h1>Historial de citas de paciente</h1>
+            <p>Registros</p>
         </div>
 
         <nav class="navbar navbar-expand-sm navbar-dark">
@@ -160,28 +174,26 @@
         </div>
 
         <div class="container mt-3">
-            <h2>Historial de citas</h2>
             <ul class="list-group">
-                <%
-                String nombreDoctor = "";
-                if(rs.next()){
-                while(rs.next()){
-                    ResultSet medico = dbh.getMedic(rs.getInt("doctorid"));
-                    while(medico.next()){
-                        nombreDoctor = medico.getString("nombre");
-                    }
-                
+                <%                    String nombreDoctor = "";
+                    if (rs.next()) {
+                        while (rs.next()) {
+                            ResultSet medico = dbh.getMedic(rs.getInt("doctorid"));
+                            while (medico.next()) {
+                                nombreDoctor = medico.getString("nombre");
+                            }
+
                 %>
-                
+
                 <li class="list-group-item ">
                     <b>Especialidad:</b> <%=rs.getString("especialidad")%>  |  
                     <b>Doctor:</b> <%=nombreDoctor%>  |  
                     <b>Fecha:</b><%=rs.getString("fechaHora")%>  |  
                     <b>Motivo:</b> <%=rs.getString("motivo")%></li>
-                <%
-                    }
-                }else{
-                %>
+                    <%
+                        }
+                    } else {
+                    %>
                 <h3><b>No tiene citas registradas</b></h3>
                 <%}%>
             </ul>

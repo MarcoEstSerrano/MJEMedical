@@ -42,10 +42,24 @@
 
 
             .header h3 {
-                font-size: 3rem; /* Aumentar el tamaño de la fuente del título */
+                font-size: 3rem;
                 font-weight: bold;
                 color: skyblue;
             }
+
+            .header h3 {
+                font-size: 3rem;
+                font-weight: bold;
+                color: skyblue;
+                text-shadow: 2px 2px 4px black;
+                border: 2px solid rgba(0, 0, 0, 0.6);
+                display: inline-block;
+                padding: 10px 20px;
+                border-radius: 10px;
+                background-color: rgba(0, 0, 0, 0.3);
+            }
+
+
 
             .header p {
                 font-size: 2rem; /* Aumentar el tamaño de la fuente del subtítulo */
@@ -77,21 +91,20 @@
             }
 
             /* Estilos de los botones personalizados */
-            .btn-custom {
-                font-weight: bold;
+            .btn-primary {
                 font-size: 1.2rem;
-                padding: 15px;
-                background-color: #007bff;
-                color: skyblue;
+                font-weight: bold;
+                padding: 12px;
+                background-color: lightblueblue; /* azul celeste */
+                color: white;
+                border: none;
                 border-radius: 5px;
-                text-transform: uppercase;
             }
 
-            .btn-custom:hover {
-                background-color: #0056b3;
+            .btn-primary:hover {
+                background-color: #00b5e2; /* azul celeste más oscuro */
                 transition: background-color 0.3s ease;
             }
-
             /* Diseño de las tarjetas */
             .card {
                 border-radius: 15px;
@@ -123,6 +136,90 @@
                 color: white !important; /* Descripción en blanco */
             }
 
+
+            /* Estilo para el offcanvas */
+            .offcanvas {
+                background-color: rgba(0, 0, 0, 0.85);
+                color: white;
+                backdrop-filter: blur(8px);
+            }
+
+            /* Título del offcanvas */
+            .offcanvas-header h5 {
+                font-size: 1.8rem;
+                font-weight: bold;
+                color: skyblue;
+                text-shadow: 1px 1px 3px black;
+            }
+
+            /* Botón cerrar (la X) */
+            .offcanvas-header .btn-close {
+                filter: invert(1); /* para que se vea blanca */
+            }
+
+            /* Lista de notificaciones */
+            .offcanvas-body .list-group-item {
+                background-color: rgba(255, 255, 255, 0.1);
+                color: white;
+                border: none;
+                margin-bottom: 10px;
+                border-radius: 8px;
+                padding: 15px;
+                font-size: 1rem;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            /* Botón "Listo" dentro del offcanvas */
+            .offcanvas-body .btn-primary {
+                background-color: skyblue;
+                border: none;
+                color: black;
+                font-weight: bold;
+                padding: 6px 12px;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+
+            .offcanvas-body .btn-primary:hover {
+                background-color: #00b5e2;
+                color: white;
+            }
+
+            .card-img-top {
+                height: 200px; /* Puedes ajustar esta altura según te guste */
+                object-fit: cover;
+                width: 100%;
+            }
+
+            .modal-header {
+                background-color: #dc3545;
+                color: white;
+            }
+
+            .modal-body {
+                color: black;
+                font-weight: bold;
+            }
+
+            .modal-footer .btn-danger {
+                background-color: #dc3545;
+                color: white;
+            }
+
+            .modal-footer .btn-danger:hover {
+                background-color: #c82333;
+            }
+
+            .modal-content {
+                border-radius: 10px;
+            }
+
+
+
+
         </style>
     </head>
     <body>
@@ -137,15 +234,14 @@
 
             int userId = (int) session.getAttribute("medicId");
             DbHelper dbh = new DbHelper();
-            
-            
+
             ResultSet notis = dbh.getNotificaciones(userId);
         %>
 
         <!-- Encabezado -->
         <div class="header">
             <h3>MJE Medical</h3>
-            <p>Su salud en nuestras manos</p>
+            <p>Sistema de Médico</p>
         </div>
 
         <!-- Barra de navegación -->
@@ -153,7 +249,7 @@
             <div class="container-fluid">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link " href="home.jsp">Home</a>
+                        <a class="nav-link " href="homeMedic.jsp">Home</a>
                     </li>
 
                     <li class="nav-item">
@@ -186,12 +282,13 @@
 
         <!-- Contenedor de eventos -->
         <div class="container mt-5">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 justify-content-center">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 justify-content-center">
 
-                <div class="col mb-4">
-                    <div class="card">
+
+                <div class="col d-flex">
+                    <div class="card d-flex flex-column w-100">
                         <img src="img/notificaciones.jpg" class="card-img-top" />
-                        <div class="card-body">
+                        <div class="card-body d-flex flex-column">
                             <h5 class="card-title">Notificaciones</h5>
                             <p class="card-text">Historial de consulta de pacientes y notificaciones</p>
                             <div class="mt-auto">
@@ -201,12 +298,10 @@
                     </div>
                 </div>
 
-
-
-                <div class="col mb-4">
-                    <div class="card">
+                <div class="col d-flex">
+                    <div class="card d-flex flex-column w-100">
                         <img src="img/solic.jpeg" class="card-img-top" />
-                        <div class="card-body">
+                        <div class="card-body d-flex flex-column">
                             <h5 class="card-title">Programar una cita</h5>
                             <p class="card-text">Descripcion: Agrega, modifica o cancela tus citas.</p>
                             <div class="mt-auto">
@@ -215,6 +310,7 @@
                         </div>
                     </div>
                 </div>
+
 
 
             </div>
@@ -227,19 +323,19 @@
             </div>
             <div class="offcanvas-body">
                 <ul class="list-group">
-                    
+
                     <%
-                    if(notis.next()){
-                        while (notis.next()) {%>        
-                            <li class="list-group-item"><%=notis.getString("titulo")%> / <%=notis.getString("descripcion")%>
-                                <a href="VerInfoCita.jsp?id=<%=notis.getString("espacioId")%>" class="btn btn-primary w-10"><b>Ver</b></a>
-                            </li>
-                    <% 
+                        if (notis.next()) {
+                            while (notis.next()) {%>        
+                    <li class="list-group-item"><%=notis.getString("titulo")%> / <%=notis.getString("descripcion")%>
+                        <a href="VerInfoCita.jsp?id=<%=notis.getString("espacioId")%>" class="btn btn-primary w-10"><b>Ver</b></a>
+                    </li>
+                    <%
                         }
-                    }else{
+                    } else {
                     %>  
-                      <h3>Sin notificaciones</h3>
-                    <% } %>     
+                    <h3>Sin notificaciones</h3>
+                    <% }%>     
                 </ul>
             </div>
         </div>

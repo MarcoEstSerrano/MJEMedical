@@ -42,10 +42,24 @@
 
 
             .header h3 {
-                font-size: 3rem; /* Aumentar el tamaño de la fuente del título */
+                font-size: 3rem;
                 font-weight: bold;
                 color: skyblue;
             }
+
+            .header h3 {
+                font-size: 3rem;
+                font-weight: bold;
+                color: skyblue;
+                text-shadow: 2px 2px 4px black;
+                border: 2px solid rgba(0, 0, 0, 0.6);
+                display: inline-block;
+                padding: 10px 20px;
+                border-radius: 10px;
+                background-color: rgba(0, 0, 0, 0.3);
+            }
+
+
 
             .header p {
                 font-size: 2rem; /* Aumentar el tamaño de la fuente del subtítulo */
@@ -122,7 +136,21 @@
                 font-weight: 300;
                 color: white !important; /* Descripción en blanco */
             }
-  
+
+            .card {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .card-body {
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+
 
             /* Mejorar la visibilidad del modal */
             .modal-header {
@@ -147,6 +175,67 @@
             .modal-content {
                 border-radius: 10px;
             }
+
+            /* Estilo para el offcanvas */
+            .offcanvas {
+                background-color: rgba(0, 0, 0, 0.85);
+                color: white;
+                backdrop-filter: blur(8px);
+            }
+
+            /* Título del offcanvas */
+            .offcanvas-header h5 {
+                font-size: 1.8rem;
+                font-weight: bold;
+                color: skyblue;
+                text-shadow: 1px 1px 3px black;
+            }
+
+            /* Botón cerrar (la X) */
+            .offcanvas-header .btn-close {
+                filter: invert(1); /* para que se vea blanca */
+            }
+
+            /* Lista de notificaciones */
+            .offcanvas-body .list-group-item {
+                background-color: rgba(255, 255, 255, 0.1);
+                color: white;
+                border: none;
+                margin-bottom: 10px;
+                border-radius: 8px;
+                padding: 15px;
+                font-size: 1rem;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            /* Botón "Listo" dentro del offcanvas */
+            .offcanvas-body .btn-primary {
+                background-color: skyblue;
+                border: none;
+                color: black;
+                font-weight: bold;
+                padding: 6px 12px;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+
+            .offcanvas-body .btn-primary:hover {
+                background-color: #00b5e2;
+                color: white;
+            }
+
+            .card-img-top {
+                height: 200px; /* o cualquier altura que te guste */
+                object-fit: cover;
+                width: 100%;
+            }
+
+
+
+
 
         </style>
     </head>

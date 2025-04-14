@@ -201,7 +201,7 @@
 
         <div class="header">
             <h3>MJE Medical</h3>
-            <p>Su salud en nuestras manos</p>
+            <p>Sistema medico</p>
         </div>
 
 

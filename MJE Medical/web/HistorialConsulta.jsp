@@ -16,27 +16,24 @@
                 background-size: cover;
                 background-position: center;
                 background-attachment: fixed;
-                color: white;
                 font-family: 'Arial', sans-serif;
+                color: #fff;
             }
 
             .navbar {
-                background-color: rgba(0, 0, 0, 0.7); /* Barra de navegación oscura */
+                background-color: rgba(0, 0, 0, 0.7);
             }
 
             .navbar-nav .nav-link {
-                font-size: 1.1rem;
                 font-weight: bold;
             }
 
             .navbar-nav .nav-link:hover {
-                color: lightblue; /* Color dorado al pasar el mouse */
+                color: skyblue;
             }
             
-            /* Nuevo estilo para el enlace "Cerrar sesión" */
             .navbar-nav .nav-link[data-bs-target="#myModal"] {
-                color: red !important;
-                font-weight: bold;
+                color: #ff4d4d !important;
             }
 
             .navbar-nav .nav-link[data-bs-target="#myModal"]:hover {
@@ -44,60 +41,39 @@
             }
 
             .hero-section {
-                background: rgba(0, 0, 0, 0.6);
-                padding: 50px 0; /* Aumenta un poco la altura */
+                background-color: rgba(0, 0, 0, 0.5);
                 text-align: center;
+                padding: 60px 20px;
+                margin-bottom: -2px;
+                border-bottom: 2px solid skyblue;
             }
 
-            .hero-section h1 {
-                font-size: 3.5rem; /* Ajuste tamaño título */
-                color: #FFFFFF;
+            .hero-section h2 {
+                font-size: 2.8rem;
+                color: #00d4ff;
                 font-weight: bold;
+                margin-bottom: 15px;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             }
 
             .hero-section p {
-                font-size: 1.5rem;
-                color: #FFFFFF;
+                font-size: 1.2rem;
+                color: #f0f0f0;
+                margin-bottom: 0;
             }
 
-            .card {
-                background-color: rgba(255, 255, 255, 0.8); /* Fondo más suave */
-                border-radius: 15px;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra más suave */
-                padding: 25px;
-            }
-
-            .form-control {
-                background-color: #FFFFFF;
-                border-radius: 10px;
-                border: 1px solid #28a745; /* Verde médico */
+            .card-cita {
+                background-color: rgba(255, 255, 255, 0.9);
                 color: #333;
+                border-radius: 15px;
+                padding: 20px;
+                margin-bottom: 20px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                transition: transform 0.3s ease;
             }
 
-            .form-label {
-                color: #333 !important; /* Texto claro */
-            }
-
-            .btn-primary {
-                background-color: #28a745; /* Verde hospitalario */
-                border-color: #28a745;
-                font-weight: bold;
-                border-radius: 10px;
-            }
-
-            .btn-primary:hover {
-                background-color: #218838;
-                border-color: #1e7e34;
-            }
-
-            .card-body {
-                color: #333; /* Color de texto más oscuro */
-            }
-
-            .card-title {
-                font-size: 1.25rem;
-                font-weight: bold;
-                color: #007BFF; /* Azul como color médico */
+            .card-cita:hover {
+                transform: translateY(-5px);
             }
 
             .modal-header {
@@ -105,39 +81,44 @@
                 color: white;
             }
 
-            .modal-body {
-                color: black;
-                font-weight: bold;
-            }
-
             .modal-footer .btn-danger {
                 background-color: #dc3545;
-                color: white;
             }
 
             .modal-footer .btn-danger:hover {
                 background-color: #c82333;
             }
 
-            .modal-content {
-                border-radius: 10px;
+            h2 {
+                color: #fff;
+                text-align: center;
+                margin-bottom: 30px;
             }
 
-
+            .mensaje-vacio {
+                text-align: center;
+                padding: 50px 20px;
+                color: #ffffff;
+                background-color: rgba(0, 0, 0, 0.5);
+                border-radius: 15px;
+                margin-top: 40px;
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
         </style>
     </head>
     <body>
-        
+
         <%
             int userId = Integer.parseInt(request.getParameter("userId"));
-        
+
             DbHelper dbh = new DbHelper();
             ResultSet rs = dbh.getCitas(userId);
 
         %>
         <div class="hero-section">
-            <h1>Solicite su cita</h1>
-            <p>Complete los datos</p>
+            <h2>Historial de citas</h2>
+            <p>Revisa tus citas pasadas con los detalles correspondientes</p>
         </div>
 
         <nav class="navbar navbar-expand-sm navbar-dark">
@@ -170,30 +151,32 @@
         </div>
 
         <div class="container mt-3">
-            <h2>Historial de citas</h2>
+
             <ul class="list-group">
-                <%
-                String nombreDoctor = "";
-                if(rs.next()){
-                while(rs.next()){
-                    ResultSet medico = dbh.getMedic(rs.getInt("doctorid"));
-                    while(medico.next()){
-                        nombreDoctor = medico.getString("nombre");
-                    }
-                
+                <%                    String nombreDoctor = "";
+                    if (rs.next()) {
+                        while (rs.next()) {
+                            ResultSet medico = dbh.getMedic(rs.getInt("doctorid"));
+                            while (medico.next()) {
+                                nombreDoctor = medico.getString("nombre");
+                            }
+
                 %>
-                
+
                 <li class="list-group-item ">
                     <b>Especialidad:</b> <%=rs.getString("especialidad")%>  |  
                     <b>Doctor:</b> <%=nombreDoctor%>  |  
                     <b>Fecha:</b><%=rs.getString("fechaHora")%>  |  
                     <b>Motivo:</b> <%=rs.getString("motivo")%></li>
-                <%
-                    }
-                }else{
-                %>
-                <h3><b>No tiene citas registradas</b></h3>
-                <%}%>
+                    <%
+                        }
+                    } else {
+                    %>
+                <div class="mensaje-vacio">
+                    <i class="fas fa-calendar-times fa-2x mb-3"></i><br>
+                    No tiene citas registradas
+                </div>
+                <% }%>
             </ul>
         </div>
     </body>

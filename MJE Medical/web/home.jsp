@@ -251,11 +251,7 @@
 
             int userId = (int) session.getAttribute("userId");
             DbHelper dbh = new DbHelper();
-
-            Notificacion noti = new Notificacion(1, 1, "Prueba1", "Prueba de notis", "20/20/20", 1);
-            dbh.saveNotification(noti);
-
-            ResultSet notis = dbh.getNotificaciones(userId);
+            ResultSet notis = dbh.getNotificaciones(userId, "usuario");
         %>
 
         <!-- Encabezado -->
@@ -360,7 +356,7 @@
                     <%
                         if (notis.next()) {
                             while (notis.next()) {%>        
-                    <li class="list-group-item"><%=notis.getString("titulo")%> / <%=notis.getString("descripcion")%>
+                    <li class="list-group-item"><%=notis.getString("fecha")%> | <%=notis.getString("titulo")%>-<%=notis.getString("descripcion")%>
                         <a href="quitarNotificacion.jsp?id=<%=notis.getString("id")%>" class="btn btn-primary w-10"><b>Listo</b></a>
                     </li>
                     <%

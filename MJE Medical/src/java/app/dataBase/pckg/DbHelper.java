@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -105,41 +106,6 @@ public class DbHelper {
         }
     }
 
-    public boolean saveEvent(Event event) throws SQLException {
-        try {
-            PreparedStatement predStatement
-                    = conn.prepareStatement("INSERT INTO gestion (e_userId, e_name, e_description, e_date, e_photo, e_ubication, e_tickets)"
-                            + "VALUES (?, ?, ?, ?, ?, ?, ?)");
-
-            predStatement.setInt(1, event.getUser_id());
-            predStatement.setString(2, event.getName());
-            predStatement.setString(3, event.getDescription());
-            predStatement.setString(4, event.getDate());
-            predStatement.setString(5, event.getPhoto());
-            predStatement.setString(6, event.getUbication());
-            predStatement.setInt(7, event.getTicketsAvailable());
-
-            predStatement.executeUpdate();
-
-            return true;
-
-        } catch (SQLException ex) {
-            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
-            return false;
-        }
-    }
-
-    public ResultSet getUsers() throws SQLException {
-        try {
-            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM Users;");
-            ResultSet resultset = predStatement.executeQuery();
-            return resultset;
-        } catch (SQLException ex) {
-            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
-        }
-        return null;
-    }
-
     public int getUserId(String email) throws SQLException {
         int userId = 0;
         try {
@@ -154,75 +120,11 @@ public class DbHelper {
         return userId;
     }
 
-    public ResultSet getEvents() throws SQLException {
-        try {
-            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM gestion;");
-            ResultSet resultset = predStatement.executeQuery();
-            return resultset;
-        } catch (SQLException ex) {
-            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
-        }
-        return null;
-    }
-
-    public ResultSet getEvent(int eventId) throws SQLException {
-        try {
-            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM paseos INNER JOIN usuarios ON paseos.e_userId = usuarios.id WHERE gestion.e_id = ?;");
-            predStatement.setInt(1, eventId);
-            return predStatement.executeQuery();
-        } catch (SQLException ex) {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
-    public boolean updatePaseo(int paseoId, Event event) throws SQLException {
-        try {
-            PreparedStatement predStatement
-                    = conn.prepareStatement("UPDATE gestion SET e_name = ?, e_description = ?, e_date = ?, e_ubication = ?, e_tickets = ? WHERE e_id = ?;");
-
-            predStatement.setString(1, event.getName());
-            predStatement.setString(2, event.getDescription());
-            predStatement.setString(3, event.getDate());
-            predStatement.setString(4, event.getUbication());
-            predStatement.setInt(5, event.getTicketsAvailable());
-            predStatement.setInt(6, paseoId);
-
-            predStatement.executeUpdate();
-
-            return true;
-
-        } catch (SQLException ex) {
-            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
-            return false;
-        }
-    }
-
-    public boolean deleteEvent(int eventId, int user_id) throws SQLException {
-        try {
-            PreparedStatement predStatement
-                    = conn.prepareStatement("DELETE FROM paseos WHERE e_id = ? AND e_userId = ?;");
-
-            predStatement.setInt(1, eventId);
-            predStatement.setInt(2, user_id);
-
-            predStatement.executeUpdate();
-
-            return true;
-
-        } catch (SQLException ex) {
-            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
-            return false;
-        }
-    }
-
     public void saveNotification(Notificacion note) throws SQLException {
         try {
 
             PreparedStatement predStatement
-                    = conn.prepareStatement("INSERT INTO notificaciones (userId, destinoId, titulo, descripcion, fecha, estado, espacioId) VALUES (?, ?, ?, ?, ?, ?, ?);");
-
-            String today = LocalDateTime.now().toString();
+                    = conn.prepareStatement("INSERT INTO notificaciones (userId, destinoId, titulo, descripcion, fecha, estado, espacioId, tipo) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
 
             predStatement.setInt(1, note.getUserId());
             predStatement.setInt(2, note.getDestinoId());
@@ -231,45 +133,11 @@ public class DbHelper {
             predStatement.setString(5, note.getFecha());
             predStatement.setInt(6, note.getEstado());
             predStatement.setInt(7, note.getEspacioId());
+            predStatement.setString(8, note.getTipo());
             predStatement.executeUpdate();
         } catch (SQLException ex) {
-        }
-
-    }
-
-    public boolean reservarPaseo(int paseoId, int userId, int r_tickets) throws SQLException {
-        try {
-            PreparedStatement predStatement
-                    = conn.prepareStatement("INSERT INTO reservas(event_id, user_id, r_tickets) VALUES (?, ?, ?);");
-
-            predStatement.setInt(1, paseoId);
-            predStatement.setInt(2, userId);
-            predStatement.setInt(3, r_tickets);
-
-            predStatement.executeUpdate();
-
-            return true;
-
-        } catch (SQLException ex) {
-            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
-            return false;
-        }
-    }
-
-    public boolean actualizarTickets(int eventId, int newTickets) throws SQLException {
-        try {
-            PreparedStatement predStatement
-                    = conn.prepareStatement("UPDATE paseos SET e_tickets = ? WHERE e_id = ?;");
-
-            predStatement.setInt(1, newTickets);
-            predStatement.setInt(2, eventId);
-            predStatement.executeUpdate();
-
-            return true;
-
-        } catch (SQLException ex) {
-            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
-            return false;
+            ex.printStackTrace();
+            throw new SQLException("Error al guardar notificación: " + ex.getMessage(), ex);
         }
     }
 
@@ -299,83 +167,12 @@ public class DbHelper {
         return null;
     }
 
-    public ResultSet getReserves(int userId) throws SQLException {
+    public ResultSet getNotificaciones(int id, String tipo) throws SQLException {
         try {
-            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM reservas INNER JOIN paseos ON reservas.event_id = paseos.e_id WHERE reservas.user_id = ?;");
-            predStatement.setInt(1, userId);
-
-            return predStatement.executeQuery();
-
-        } catch (SQLException ex) {
-            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
-        }
-        return null;
-    }
-
-    public ResultSet getReserv(int reservId) throws SQLException {
-        try {
-            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM reservas WHERE reserv_id = ?;");
-            predStatement.setInt(1, reservId);
-
-            return predStatement.executeQuery();
-
-        } catch (SQLException ex) {
-            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
-        }
-        return null;
-    }
-
-    public ResultSet getReservFullInfo(int reservId) throws SQLException {
-        try {
-            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM reservas INNER JOIN gestion ON reservas.event_id = gestion.e_id WHERE reservas.reserv_id = ?;");
-            predStatement.setInt(1, reservId);
-
-            return predStatement.executeQuery();
-
-        } catch (SQLException ex) {
-            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
-        }
-        return null;
-    }
-
-    public boolean cancelarReserva(int reservId) throws SQLException {
-        try {
-            PreparedStatement predStatement
-                    = conn.prepareStatement("Delete from reservas WHERE reserv_id = ?;");
-
-            predStatement.setInt(1, reservId);
-            predStatement.executeUpdate();
-
-            return true;
-
-        } catch (SQLException ex) {
-            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
-            return false;
-        }
-    }
-
-    public boolean actualizarReserva(int reservId, int newTickets) throws SQLException {
-        try {
-            PreparedStatement predStatement
-                    = conn.prepareStatement("UPDATE reservas SET r_tickets = ? WHERE reserv_id = ?;");
-
-            predStatement.setInt(1, newTickets);
-            predStatement.setInt(2, reservId);
-            predStatement.executeUpdate();
-
-            return true;
-
-        } catch (SQLException ex) {
-            //Logger.getLogger(databaseHelper.class.getName()).log(Level.ERROR, null, ex);
-            return false;
-        }
-    }
-
-    public ResultSet getNotificaciones(int id) throws SQLException {
-        try {
-            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM notificaciones WHERE destinoId = ? AND estado = ?;");
+            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM notificaciones WHERE destinoId = ? AND estado = ? AND tipo = ?;");
             predStatement.setInt(1, id);
             predStatement.setInt(2, 1);
+            predStatement.setString(3, tipo);
             ResultSet resultset = predStatement.executeQuery();
             return resultset;
         } catch (SQLException ex) {
@@ -496,6 +293,21 @@ public class DbHelper {
             while (rs.next()) {
 
                 if (rs.getInt("citaId") > 0) {
+                    
+                    //notificacion para el usuario
+                    String titulo = "Cita cancelada";
+                    String descripcion = rs.getString("especialidad") + ": " + rs.getString("fecha");
+                    LocalDate fechaActual = LocalDate.now();
+                    String fechaGenerada = String.valueOf(fechaActual);
+
+                    ResultSet cita = getCita(rs.getInt("citaId"));
+                    while (cita.next()) {
+                        Notificacion notiMedic = new Notificacion(rs.getInt("doctorId"), cita.getInt("userId"), titulo, descripcion,
+                                fechaGenerada, 1, 0, "usuario");
+                        saveNotification(notiMedic);
+                    }
+                    
+                    //elimina la cita
                     PreparedStatement predStatement2
                             = conn.prepareStatement("Delete from citas WHERE id = ?;");
 
@@ -504,6 +316,20 @@ public class DbHelper {
                 }
             }
 
+            //notificacion para el medico
+            ResultSet rs2 = getEspacio(espacioId);
+            while (rs2.next()) {
+                String titulo = "Espacio eliminado";
+                String descripcion = rs2.getString("especialidad") + ": " + rs2.getString("fecha");
+                LocalDate fechaActual = LocalDate.now();
+                String fechaGenerada = String.valueOf(fechaActual);
+
+                Notificacion notiMedic = new Notificacion(rs2.getInt("doctorId"), rs2.getInt("doctorId"), titulo, descripcion,
+                        fechaGenerada, 1, 0, "medico");
+                saveNotification(notiMedic);
+            }
+            
+            //elimina el espacio
             PreparedStatement predStatement3
                     = conn.prepareStatement("Delete from espaciosDisponibles WHERE id = ?;");
 
@@ -533,6 +359,19 @@ public class DbHelper {
     }
 
     public ResultSet getEspaciosDisponibles(int espacioId) throws SQLException {
+        try {
+            PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM espaciosDisponibles WHERE id = ?;");
+            predStatement.setInt(1, espacioId);
+
+            return predStatement.executeQuery();
+
+        } catch (SQLException ex) {
+
+        }
+        return null;
+    }
+
+    public ResultSet getEspacio(int espacioId) throws SQLException {
         try {
             PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM espaciosDisponibles WHERE id = ?;");
             predStatement.setInt(1, espacioId);
@@ -601,7 +440,7 @@ public class DbHelper {
             return false;
         }
     }
-    
+
     public ResultSet getCitas(int userId) throws SQLException {
         try {
             PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM citas WHERE userId = ?;");
@@ -614,7 +453,7 @@ public class DbHelper {
         }
         return null;
     }
-    
+
     public ResultSet getCita(int citaId) throws SQLException {
         try {
             PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM citas WHERE id = ?;");
@@ -627,7 +466,7 @@ public class DbHelper {
         }
         return null;
     }
-    
+
     public ResultSet getUser(int userId) throws SQLException {
         try {
             PreparedStatement predStatement = conn.prepareStatement("SELECT * FROM usuarios WHERE id = ?;");

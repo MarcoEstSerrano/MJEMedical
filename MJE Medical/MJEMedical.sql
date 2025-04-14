@@ -18,31 +18,6 @@ create table medicos(
     primary key(id)
 );
 
-describe usuarios;
-select * from usuarios;
-
-create table reservas(
-	reserv_id int not null AUTO_INCREMENT,
-    event_id int not null,
-    user_id int not null,
-    r_tickets int not null,
-	PRIMARY KEY (reserv_id)
-);
-
-delete from paseos where e_id = 1;
-
-create table gestion(
-	e_id int not null AUTO_INCREMENT,
-    e_userId int not null,
-    e_name varchar(100),
-    e_motivo varchar(200),
-    e_date varchar(100),
-    e_photo varchar(100),
-    e_ubication varchar(100),
-	e_tickets int,
-    Primary key(e_id)
-);
-
 create table citas(
 	id int not null auto_increment,
     doctorid int,
@@ -59,7 +34,7 @@ create table espaciosDisponibles(
 	id int auto_increment not null,
 	doctorId int,
 	fecha varchar(50),
-	especialidad varchar(100),citas
+	especialidad varchar(100),
     estado int,
     citaId int,
     primary key(id)
@@ -74,9 +49,11 @@ create table notificaciones(
 	fecha varchar(100),
     estado int,
     espacioId int,
+    tipo varchar(50),
 	primary key(id)
 );
-
+INSERT INTO notificaciones (userId, destinoId, titulo, descripcion, fecha, estado, espacioId, tipo) VALUES
+ (1, 1, "hola", "fgd", "525252", 1, 1, "comun");
 
 DELETE FROM gestion WHERE e_name IN ('Notificaciones');
 

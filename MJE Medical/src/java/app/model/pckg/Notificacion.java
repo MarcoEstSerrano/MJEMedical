@@ -10,8 +10,11 @@ public class Notificacion {
     private String fecha;
     private int estado;
     private int espacioId;
+    private String tipo;
 
-    public Notificacion(int userId, int destinoId, String titulo, String descripcion, String fecha, int estado, int espacioId) {
+    //notificacion para los doctores que contiene el espacio creado.
+
+    public Notificacion(int userId, int destinoId, String titulo, String descripcion, String fecha, int estado, int espacioId, String tipo) {
         this.userId = userId;
         this.destinoId = destinoId;
         this.titulo = titulo;
@@ -19,26 +22,9 @@ public class Notificacion {
         this.fecha = fecha;
         this.estado = estado;
         this.espacioId = espacioId;
+        this.tipo = tipo;
     }
-
-    public Notificacion(int id, int userId, int destinoId, String titulo, String descripcion, String fecha, int estado) {
-        this.id = id;
-        this.userId = userId;
-        this.destinoId = destinoId;
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-        this.fecha = fecha;
-        this.estado = estado;
-    }
-
-    public Notificacion(int userId, int destinoId, String titulo, String descripcion, String fecha, int estado) {
-        this.userId = userId;
-        this.destinoId = destinoId;
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-        this.fecha = fecha;
-        this.estado = estado;
-    }
+  
 
     public int getId() {
         return id;
@@ -102,6 +88,14 @@ public class Notificacion {
 
     public void setEspacioId(int espacioId) {
         this.espacioId = espacioId;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
     
     

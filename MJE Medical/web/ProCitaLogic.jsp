@@ -1,7 +1,9 @@
+<%@page import="java.time.LocalDate"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="app.model.pckg.Notificacion"%>
 <%@page import="app.dataBase.pckg.DbHelper"%>
+<%@page import="java.sql.ResultSet"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -109,14 +111,18 @@
 
             if (espacioId > 0) {
 
-                LocalDateTime fechaHoraActual = LocalDateTime.now();
-                DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-                String fechaHoraFormateada = fechaHoraActual.format(formato);
+                DbHelper dbh = new DbHelper();
+                ResultSet rs = dbh.getEspacio(espacioId);
+                while (rs.next()) {
+                    String titulo = "Espacio Publicado";
+                    String descripcion = rs.getString("especialidad") + ": " + rs.getString("fecha");
+                    LocalDate fechaActual = LocalDate.now();
+                    String fechaGenerada = String.valueOf(fechaActual);
 
-                Notificacion notimedic = new Notificacion(medicId, medicId, "create", "cita", fechaHoraFormateada, 1, espacioId);
-
-                db.saveNotification(notimedic);
-
+                    Notificacion notiMedic = new Notificacion(medicId, medicId, titulo, descripcion,
+                            fechaGenerada, 1, espacioId, "medico");
+                    dbh.saveNotification(notiMedic);
+                }
         %>
         <div class="container d-flex justify-content-center">
             <div class="card shadow-lg p-4">
@@ -127,7 +133,7 @@
                 </div>
             </div>
         </div>
-        <%} else {%>
+        <%}else {%>
         <div class="container d-flex justify-content-center">
             <div class="card shadow-lg p-4">
                 <div class="card-body">

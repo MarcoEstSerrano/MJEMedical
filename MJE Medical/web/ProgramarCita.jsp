@@ -20,92 +20,112 @@
                 background-position: center;
                 background-attachment: fixed;
                 color: white;
-                font-family: 'Arial', sans-serif;
+                font-family: 'Segoe UI', 'Arial', sans-serif;
             }
 
             .navbar {
-                background-color: rgba(0, 0, 0, 0.7); /* Barra de navegación oscura */
+                background-color: rgba(0, 0, 0, 0.7);
+                box-shadow: 0 2px 10px rgba(0,0,0,0.5);
             }
 
             .navbar-nav .nav-link {
                 font-size: 1.1rem;
                 font-weight: bold;
+                transition: color 0.3s ease;
             }
 
             .navbar-nav .nav-link:hover {
-                color: #FFD700; /* Color dorado al pasar el mouse */
+                color: lightblue;
+            }
+
+            .navbar-nav .nav-link[data-bs-target="#myModal"] {
+                color: #ff4d4d !important;
+            }
+
+            .navbar-nav .nav-link[data-bs-target="#myModal"]:hover {
+                color: darkred !important;
             }
 
             .hero-section {
                 background: rgba(0, 0, 0, 0.6);
-                padding: 50px 0; /* Aumenta un poco la altura */
+                padding: 65px 0;
                 text-align: center;
+                border-bottom: 2px solid rgba(255,255,255,0.1);
             }
 
             .hero-section h1 {
-                font-size: 3.5rem; /* Ajuste tamaño título */
-                color: #FFFFFF;
+                font-size: 2.8rem;
                 font-weight: bold;
+                color: #ffffff;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             }
 
             .hero-section p {
-                font-size: 1.5rem;
-                color: #FFFFFF;
+                font-size: 1.2rem;
+                color: #f0f0f0;
+                margin-bottom: 0;
             }
 
             .card {
-                background-color: rgba(255, 255, 255, 0.8); /* Fondo más suave */
-                border-radius: 15px;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra más suave */
-                padding: 25px;
+                background-color: rgba(255, 255, 255, 0.9);
+                border-radius: 20px;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+                padding: 30px;
+                backdrop-filter: blur(5px);
             }
 
-            .form-control {
-                background-color: #FFFFFF;
+            .form-control,
+            .form-select {
+                background-color: #f9f9f9;
                 border-radius: 10px;
-                border: 1px solid #28a745; /* Verde médico */
+                border: 1px solid #28a745;
                 color: #333;
+                font-size: 1rem;
+            }
+
+            .form-control:focus,
+            .form-select:focus {
+                box-shadow: 0 0 0 0.2rem rgba(0, 181, 226, 0.25);
+                border-color: #00b5e2;
             }
 
             .form-label {
-                color: #333 !important; /* Texto claro */
+                color: #333;
+                font-weight: bold;
+                margin-bottom: 6px;
             }
 
             .btn-primary {
-                background-color: #28a745; /* Verde hospitalario */
-                border-color: #28a745;
+                font-size: 1.2rem;
                 font-weight: bold;
-                border-radius: 10px;
+                padding: 10px;
+                background-color: #00b5e2;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                transition: background-color 0.3s ease;
             }
 
             .btn-primary:hover {
-                background-color: #218838;
-                border-color: #1e7e34;
+                background-color: #009fc2;
             }
 
-            .card-body {
-                color: #333; /* Color de texto más oscuro */
-            }
-
-            .card-title {
-                font-size: 1.25rem;
-                font-weight: bold;
-                color: #007BFF; /* Azul como color médico */
-            }
-            
             .modal-header {
                 background-color: #dc3545;
                 color: white;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
             }
 
             .modal-body {
-                color: black;
-                font-weight: bold;
+                color: #333;
+                font-weight: 500;
             }
 
             .modal-footer .btn-danger {
                 background-color: #dc3545;
                 color: white;
+                border-radius: 6px;
             }
 
             .modal-footer .btn-danger:hover {
@@ -113,10 +133,8 @@
             }
 
             .modal-content {
-                border-radius: 10px;
+                border-radius: 12px;
             }
-
-
         </style>
     </head>
     <body>
@@ -133,7 +151,7 @@
                 </ul>
             </div>
         </nav>
-        
+
         <div class="modal" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -164,7 +182,7 @@
                             <label class="form-label"><i class="fas fa-pen"></i> <b>Fecha</b></label>
                             <input type="datetime-local" class="form-control" name="txtFecha" placeholder="Ingresa la fecha de la cita" required>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label class="form-label"><i class="fas fa-ticket-alt"></i> <b>Especialidad</b></label>
                             <select name="txtEspecialidad" id="txtEspecialidad" required class="form-select">

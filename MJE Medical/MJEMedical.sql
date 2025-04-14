@@ -59,7 +59,7 @@ create table espaciosDisponibles(
 	id int auto_increment not null,
 	doctorId int,
 	fecha varchar(50),
-	especialidad varchar(100),
+	especialidad varchar(100),citas
     estado int,
     citaId int,
     primary key(id)

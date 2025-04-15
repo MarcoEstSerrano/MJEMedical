@@ -17,150 +17,154 @@
         <link href="styles.css" rel="stylesheet" type="text/css"/>
 
         <style>
-            /* Establecer la imagen de fondo */
             body {
-                background-image: url('img/celeste.png'); /* Cambia la ruta si es necesario */
+                background-image: url('img/celeste.png');
                 background-size: cover;
                 background-position: center;
-                color: white;
-                font-family: 'Arial', sans-serif;
-                margin-top: 0; /* Eliminar margen superior del body */
-                padding-top: 0; /* Eliminar padding superior */
-            }
-
-            /* Encabezado */
-            .header {
-                background-color: rgba(0, 0, 0, 0.5); /* Fondo negro transparente */
-                padding: 36px 0; /* Aumentar padding si es necesario */
-                text-align: center;
-                position: relative;
-                top: 0;
-                width: 100%;
+                background-attachment: fixed;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 margin: 0;
+                padding: 0;
             }
 
-
+            .header {
+                background-color: rgba(0, 91, 150, 0.85);
+                padding: 30px 0;
+                text-align: center;
+                color: #e3f2fd;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            }
 
             .header h3 {
-                font-size: 3rem; /* Aumentar el tamaño de la fuente del título */
+                font-size: 2.5rem;
                 font-weight: bold;
-                color: skyblue;
+                margin: 0;
+                color: #b3e5fc;
             }
 
             .header p {
-                font-size: 2rem; /* Aumentar el tamaño de la fuente del subtítulo */
-                font-weight: 300;
+                font-size: 1.2rem;
+                margin: 0;
+                color: #e0f7fa;
             }
 
-            /* Estilos del Navbar */
             .navbar {
-                background-color: rgba(0, 0, 0, 0.7);
+                background-color: rgba(0, 0, 0, 0.6);
+                padding: 10px 20px;
             }
 
             .navbar-nav .nav-link {
-                font-size: 1.1rem;
+                color: white;
                 font-weight: bold;
+                transition: color 0.3s ease;
             }
 
             .navbar-nav .nav-link:hover {
-                color: skyblue; /* Color dorado al pasar el mouse */
+                color: #81d4fa;
             }
 
-            /* Nuevo estilo para el enlace "Cerrar sesión" */
             .navbar-nav .nav-link[data-bs-target="#myModal"] {
-                color: red !important;
-                font-weight: bold;
+                color: #ff5252 !important;
             }
 
             .navbar-nav .nav-link[data-bs-target="#myModal"]:hover {
-                color: darkred !important;
+                color: #e53935 !important;
             }
 
-            /* Estilos de los botones personalizados */
-            .btn-custom {
-                font-weight: bold;
-                font-size: 1.2rem;
-                padding: 15px;
-                background-color: #007bff;
-                color: skyblue;
-                border-radius: 5px;
-                text-transform: uppercase;
+            .container, .card-body {
+                margin-top: 30px;
+                color: #01579b;
             }
 
-            .btn-custom:hover {
-                background-color: #0056b3;
-                transition: background-color 0.3s ease;
-            }
-
-            /* Diseño de las tarjetas */
             .card {
-                border-radius: 15px;
-                overflow: hidden;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                transition: transform 0.3s ease;
-                margin-bottom: 30px;
-            }
-
-            .card:hover {
-                transform: translateY(-10px);
-            }
-
-            .card-body {
-                background-color: rgba(0, 0, 0, 0.7);
-                padding: 20px;
-                color: white !important; /* Hace que todo el texto dentro de la tarjeta sea blanco */
+                background-color: #ffffff; /* fondo blanco sólido */
+                border-radius: 20px;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+                color: #01579b;
+                padding: 30px;
+                text-align: center;
+                width: 100%;
+                max-width: 600px;
+                margin: auto;
             }
 
             .card-title {
-                font-size: 1.5rem;
+                color: #0288d1;
                 font-weight: bold;
-                color: white !important; /* Título en blanco */
+                font-size: 1.5rem;
             }
 
             .card-text {
+                color: #004d40;
                 font-size: 1.1rem;
-                font-weight: 300;
-                color: white !important; /* Descripción en blanco */
+                margin-bottom: 12px;
+                text-align: left;
             }
 
-            .btn-primary {
-                font-size: 1.2rem;
+            .btn {
+                border-radius: 30px;
+                padding: 12px 20px;
+                font-size: 1rem;
                 font-weight: bold;
-                padding: 12px;
-                background-color: #28a745;
+                width: 100%;
+            }
+
+            .btn-success {
+                background-color: #03A9F4;
+                color: white;
                 border: none;
             }
 
-            .btn-primary:hover {
-                background-color: #218838;
-                transition: background-color 0.3s ease;
+            .btn-success:hover {
+                background-color: #0288d1;
             }
 
-            /* Mejorar la visibilidad del modal */
-            .modal-header {
-                background-color: #dc3545;
+            .btn-danger {
+                background-color: #ef5350;
+                border: none;
+                width: auto;
+                display: inline-block;
+                padding: 10px 20px;
                 color: white;
+            }
+
+            .btn-danger:hover {
+                background-color: #d32f2f;
+            }
+
+            .modal-header {
+                background-color: #0288d1;
+                color: white;
+                border-bottom: none;
             }
 
             .modal-body {
-                color: black;
-                font-weight: bold;
+                color: #333;
+                font-weight: 500;
             }
 
             .modal-footer .btn-danger {
-                background-color: #dc3545;
-                color: white;
+                background-color: #ef5350;
+                border: none;
             }
 
             .modal-footer .btn-danger:hover {
-                background-color: #c82333;
+                background-color: #d32f2f;
             }
 
-            .modal-content {
-                border-radius: 10px;
+            .modal-footer .btn-primary {
+                background-color: #90caf9;
+                border: none;
+                color: black;
             }
+
+            .modal-footer .btn-primary:hover {
+                background-color: #64b5f6;
+            }
+
 
         </style>
+
     </head>
     <body>
 
@@ -179,22 +183,22 @@
 
             if (ocupado == 1) { //Es que esta sin ocupar
         %>
-            <div class="container d-flex justify-content-center">
-                <div class="card shadow-lg p-4">
-                    <div class="card-body">
-                        <h4 class="card-title text-success"><i class="fas fa-check-circle"></i> ¡Espacio libre!</h4>
-                        <p class="card-text">El espacio aun no ha sido ocupado por un paciente. Intenta mas tarde.</p>
-                        <a href="homeMedic.jsp" class="btn btn-success w-100"><i class="fas fa-thumbs-up"></i>Aceptar</a>
-                    </div>
+        <div class="container d-flex justify-content-center">
+            <div class="card shadow-lg p-4">
+                <div class="card-body">
+                    <h4 class="card-title text-success"><i class="fas fa-check-circle"></i> ¡Espacio libre!</h4>
+                    <p class="card-text">El espacio aun no ha sido ocupado por un paciente. Intenta mas tarde.</p>
+                    <a href="homeMedic.jsp" class="btn btn-success w-100"><i class="fas fa-thumbs-up"></i>Aceptar</a>
                 </div>
             </div>
-        <% }else{
+        </div>
+        <% } else {
             ResultSet cita = dbh.getCita(citaId);
             int userId = 0;
-            while(cita.next()){
+            while (cita.next()) {
                 userId = cita.getInt("userId");
             }
-            
+
             ResultSet usuario = dbh.getUser(userId);
         %>
 
@@ -209,7 +213,7 @@
             <div class="container-fluid">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link " href="home.jsp">Home</a>
+                        <a class="nav-link " href="homeMedic.jsp">Home</a>
                     </li>
 
                     <li class="nav-item">
@@ -252,8 +256,8 @@
                 }
             %>
 
-            
+
         </div>
-<%}%>
+        <%}%>
     </body>
 </html>

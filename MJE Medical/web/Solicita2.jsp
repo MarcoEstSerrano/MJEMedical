@@ -42,7 +42,15 @@
             }
 
             .navbar-nav .nav-link:hover {
-                color: #FFD700; /* Color dorado al pasar el mouse */
+                color: lightblue;
+            }
+            
+            .navbar-nav .nav-link[data-bs-target="#myModal"] {
+                color: #ff4d4d !important;
+            }
+
+            .navbar-nav .nav-link[data-bs-target="#myModal"]:hover {
+                color: darkred !important;
             }
 
             .hero-section {
@@ -138,9 +146,6 @@
             <div class="container-fluid">
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link" href="home.jsp">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="Notificaciones.jsp">Notificaciones</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="Solicita.jsp">Solicitar cita</a></li>
-                    <li class="nav-item"><a class="nav-link" href="error.jsp">Historial de consulta</a></li>
                     <li class="nav-item"><a class="nav-link" href="myModal" data-bs-toggle="modal" data-bs-target="#myModal">Cerrar sesión</a></li>
                 </ul>
             </div>

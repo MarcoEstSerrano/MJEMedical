@@ -32,7 +32,7 @@
             .navbar-nav .nav-link:hover {
                 color: lightblue; /* Color dorado al pasar el mouse */
             }
-            
+
             .navbar-nav .nav-link[data-bs-target="#myModal"] {
                 color: #ff4d4d !important;
             }
@@ -42,18 +42,16 @@
             }
 
             .hero-section {
-                background-color: rgba(0, 0, 0, 0.5);
+                background: rgba(0, 0, 0, 0.6);
+                padding: 65px 0;
                 text-align: center;
-                padding: 60px 20px;
-                margin-bottom: -2px;
-                border-bottom: 2px solid skyblue;
+                border-bottom: 2px solid rgba(255,255,255,0.1);
             }
 
-            .hero-section h2 {
+            .hero-section h1 {
                 font-size: 2.8rem;
-                color: #00d4ff;
                 font-weight: bold;
-                margin-bottom: 15px;
+                color: #ffffff;
                 text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             }
 
@@ -62,7 +60,8 @@
                 color: #f0f0f0;
                 margin-bottom: 0;
             }
-            
+
+
 
             .card {
                 background-color: rgba(255, 255, 255, 0.8); /* Fondo más suave */

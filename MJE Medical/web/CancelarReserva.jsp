@@ -14,96 +14,84 @@
 
         <style>
             body {
-                background-image: url('img/jaguarcito.webp');
+                background-image: url('img/celeste.png');
                 background-size: cover;
                 background-position: center;
-                background-attachment: fixed; /* Mantener la imagen fija al hacer scroll */
-                color: white;
-                font-family: 'Arial', sans-serif;
-            }
-
-            .card {
-                background: rgba(0, 0, 0, 0.7);
-                color: white;
-                border-radius: 15px;
-                overflow: hidden;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            }
-
-            .card-header {
-                background: rgba(0, 128, 0, 0.8);
-                color: white;
-                text-align: center;
-                padding: 20px;
-            }
-
-            .card-body {
-                background: rgba(0, 0, 0, 0.6);
-                padding: 20px;
-                text-align: center;
-            }
-
-            .card-footer {
-                background: rgba(255, 255, 255, 0.2);
-                border-top: 1px solid rgba(255, 255, 255, 0.3);
-                padding: 10px 0;
-                text-align: center;
-            }
-
-            .btn {
-                border-radius: 25px;
-                padding: 15px 30px;
-                font-size: 1.1rem;
-                font-weight: bold;
-                transition: background-color 0.3s ease;
-            }
-
-            .btn-primary {
-                background: rgba(0, 123, 255, 0.8);
-                border: none;
-            }
-
-            .btn-success {
-                background: rgba(40, 167, 69, 0.8);
-                border: none;
-            }
-
-            .btn-danger {
-                background: rgba(220, 53, 69, 0.8);
-                border: none;
-            }
-
-            .btn-primary:hover {
-                background-color: #218838;
-            }
-
-            .card-title {
-                font-size: 1.5rem;
-                font-weight: bold;
-            }
-
-            .card-text {
-                font-size: 1.1rem;
-                margin-bottom: 20px;
+                background-attachment: fixed;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                margin: 0;
+                padding: 0;
             }
 
             .container {
                 max-width: 600px;
-                margin-top: 50px;
+                margin-top: 60px;
+            }
+
+            .card {
+                background-color: #ffffff; /* blanco sólido */
+                border-radius: 20px;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+                padding: 30px;
+                text-align: center;
+                color: #01579b; /* azul oscuro hospitalario */
+            }
+
+            .card-title {
+                font-size: 1.8rem;
+                font-weight: bold;
+                margin-bottom: 15px;
+                color: #0288d1; /* azul celeste */
+            }
+
+            .card-text {
+                font-size: 1.1rem;
+                margin-bottom: 25px;
+                color: #004d40;
+            }
+
+            .btn {
+                border-radius: 30px;
+                padding: 12px 25px;
+                font-size: 1.1rem;
+                font-weight: bold;
+                transition: background-color 0.3s ease;
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .btn-success {
+                background-color: #03A9F4; /* celeste */
+                color: #fff;
+                border: none;
+            }
+
+            .btn-success:hover {
+                background-color: #0288d1; /* azul más fuerte al pasar mouse */
+            }
+
+            .btn-danger {
+                background-color: #f44336;
+                color: #fff;
+                border: none;
+            }
+
+            .btn-danger:hover {
+                background-color: #d32f2f;
             }
 
             .fas {
                 margin-right: 10px;
             }
 
-            /* Estilo para que el mensaje y botones se vean bien con la imagen de fondo */
             .text-success {
-                color: #28a745 !important;
+                color: #388e3c !important;
             }
 
             .text-danger {
-                color: #dc3545 !important;
+                color: #c62828 !important;
             }
+
         </style>
     </head>
     <body>

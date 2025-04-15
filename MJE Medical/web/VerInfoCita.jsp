@@ -16,31 +16,112 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
+            body {
+                background-image: url('img/celeste.png');
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                color: #01579b;
+                min-height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 20px;
+            }
 
-            /* Estilizar las tarjetas para que combinen con el fondo */
             .card {
-                background: rgba(0, 0, 0, 0.7); /* Fondo oscuro semi-transparente */
-                color: white; /* Texto blanco para contraste */
-                border-radius: 10px;
+                background: rgba(255, 255, 255, 0.9);
+                color: #01579b;
+                border-radius: 16px;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
                 overflow: hidden;
+                transition: transform 0.3s ease;
+            }
+
+            .card:hover {
+                transform: scale(1.01);
             }
 
             .card-header {
-                background: rgba(0, 128, 0, 0.8) !important; /* Verde oscuro semi-transparente */
-                color: white;
+                background: rgba(1, 87, 155, 0.9); /* Azul profundo semitransparente */
+                color: #e3f2fd;
+                padding: 20px;
+                text-align: center;
+                font-size: 1.8rem;
+                font-weight: bold;
+                border-radius: 16px 16px 0 0;
             }
 
             .card-body {
-                background: rgba(0, 0, 0, 0.6);
-                color: white;
+                padding: 30px;
+                background: rgba(240, 248, 255, 0.7); /* azul muy claro translúcido */
+            }
+
+            .card-body .card-text {
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+                color: #0277bd;
             }
 
             .card-footer {
-                background: rgba(255, 255, 255, 0.2);
-                border-top: 1px solid rgba(255, 255, 255, 0.3);
+                background: rgba(225, 245, 254, 0.9);
+                border-top: 1px solid #b3e5fc;
+                padding: 20px;
+                display: flex;
+                justify-content: space-between;
+                gap: 10px;
+                border-radius: 0 0 16px 16px;
             }
 
+            .btn {
+                border-radius: 30px;
+                font-weight: bold;
+                padding: 12px 25px;
+                font-size: 1rem;
+                width: 100%;
+                transition: all 0.3s ease-in-out;
+            }
+
+            .btn-warning {
+                background-color: #4fc3f7;
+                color: #ffffff;
+                border: none;
+            }
+
+            .btn-warning:hover {
+                background-color: #29b6f6;
+                transform: scale(1.05);
+            }
+
+            .btn-danger {
+                background-color: #ef5350;
+                color: white;
+                border: none;
+            }
+
+            .btn-danger:hover {
+                background-color: #d32f2f;
+                transform: scale(1.05);
+            }
+
+            .btn-success {
+                background-color: #0288d1;
+                color: white;
+                border: none;
+            }
+
+            .btn-success:hover {
+                background-color: #0277bd;
+                transform: scale(1.05);
+            }
+
+            i.fas {
+                margin-right: 8px;
+            }
         </style>
+
+
     </head>
     <body>
         <%
@@ -62,9 +143,8 @@
 
             <div class="card-body p-4">
 
-                
-                <%
-                    if(espacioId != 0){
+
+                <%                    if (espacioId != 0) {
                         while (rs.next()) {
                 %>
 
@@ -72,10 +152,10 @@
                 <p class="card-text"><i class="fas fa-calendar-day" style="color: #ff7043;"></i> <b>Fecha:<%=rs.getString("fecha")%></b></p>
 
                 <%
-                        }
-                    }else{
-                    %>
-                    <p class="card-text"><i class="fas fa-info-circle" style="color: #5c6bc0;"></i> <b>Sin contenido adicional</b></p>
+                    }
+                } else {
+                %>
+                <p class="card-text"><i class="fas fa-info-circle" style="color: #5c6bc0;"></i> <b>Sin contenido adicional</b></p>
                 <%
                     }
                 %>
@@ -86,7 +166,7 @@
                  border-top: 1px solid #ddd;
                  gap: 10px;">
 
-                <%if(espacioId > 0){%>
+                <%if (espacioId > 0) {%>
                 <a href="verInfoPte.jsp?espacioId=<%=espacioId%>" class="btn btn-warning btn-lg" style="border-radius: 20px;
                    padding: 12px 20px;
                    font-size: 1rem;
@@ -100,7 +180,7 @@
                    <b>Cancelar cita</b>
                 </a>
 
-                   <%}%>
+                <%}%>
                 <a href="homeMedic.jsp" 
                    class="btn btn-success btn-lg" 
                    style="border-radius: 20px; padding: 12px 20px; font-size: 1rem; flex: 1;" 

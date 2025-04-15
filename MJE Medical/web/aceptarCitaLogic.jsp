@@ -14,98 +14,107 @@
         <script src="https://kit.fontawesome.com/a076d05399.js" defer></script>
 
         <style>
+            
             body {
-                background-image: url('img/jaguarcito.webp');
+                background-image: url('img/historial.jpg');
                 background-size: cover;
                 background-position: center;
-                background-attachment: fixed; /* Mantener la imagen fija al hacer scroll */
-                color: white;
-                font-family: 'Arial', sans-serif;
-            }
-
-            .card {
-                background: rgba(0, 0, 0, 0.7);
-                color: white;
-                border-radius: 15px;
-                overflow: hidden;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            }
-
-            .card-header {
-                background: rgba(0, 128, 0, 0.8);
-                color: white;
-                text-align: center;
-                padding: 20px;
-            }
-
-            .card-body {
-                background: rgba(0, 0, 0, 0.6);
-                padding: 20px;
-                text-align: center;
-            }
-
-            .card-footer {
-                background: rgba(255, 255, 255, 0.2);
-                border-top: 1px solid rgba(255, 255, 255, 0.3);
-                padding: 10px 0;
-                text-align: center;
-            }
-
-            .btn {
-                border-radius: 25px;
-                padding: 15px 30px;
-                font-size: 1.1rem;
-                font-weight: bold;
-                transition: background-color 0.3s ease;
-            }
-
-            .btn-primary {
-                background: rgba(0, 123, 255, 0.8);
-                border: none;
-            }
-
-            .btn-success {
-                background: rgba(40, 167, 69, 0.8);
-                border: none;
-            }
-
-            .btn-danger {
-                background: rgba(220, 53, 69, 0.8);
-                border: none;
-            }
-
-            .btn-primary:hover {
-                background-color: #218838;
-            }
-
-            .card-title {
-                font-size: 1.5rem;
-                font-weight: bold;
-            }
-
-            .card-text {
-                font-size: 1.1rem;
-                margin-bottom: 20px;
+                background-attachment: fixed;
+                margin: 0;
+                padding: 0;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                color: #d6f1ff; /* Celeste claro */
+                min-height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
 
             .container {
                 max-width: 600px;
-                margin-top: 50px;
+                width: 100%;
+                margin: auto;
+                padding: 20px;
+            }
+
+            .card {
+                background: rgba(0, 0, 0, 0.65);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 18px;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+                color: #d6f1ff;
+                overflow: hidden;
+                transition: transform 0.3s ease;
+            }
+
+            .card:hover {
+                transform: translateY(-5px);
+            }
+
+            .card-body {
+                padding: 30px;
+                text-align: center;
+            }
+
+            .card-title {
+                font-size: 2rem;
+                font-weight: 700;
+                margin-bottom: 15px;
+                color: #99eaff;
+                text-shadow: 1px 1px 2px #000;
+            }
+
+            .card-text {
+                font-size: 1.1rem;
+                margin-bottom: 25px;
+                color: #cdefff;
+            }
+
+            .btn {
+                border-radius: 50px;
+                padding: 15px 35px;
+                font-size: 1.1rem;
+                font-weight: bold;
+                width: 100%;
+                transition: all 0.3s ease-in-out;
+            }
+
+            .btn-success {
+                background-color: #007bff;
+                border: none;
+                color: white;
+            }
+
+            .btn-success:hover {
+                background-color: #0056b3;
+                transform: scale(1.05);
+            }
+
+            .btn-danger {
+                background-color: #dc3545;
+                border: none;
+                color: white;
+            }
+
+            .btn-danger:hover {
+                background-color: #b02a37;
+                transform: scale(1.05);
             }
 
             .fas {
                 margin-right: 10px;
             }
 
-            /* Estilo para que el mensaje y botones se vean bien con la imagen de fondo */
+            /* Colores de íconos */
             .text-success {
-                color: #28a745 !important;
+                color: #66ffcc !important;
             }
 
             .text-danger {
-                color: #dc3545 !important;
+                color: #ff9999 !important;
             }
         </style>
+
     </head>
 
     <body>

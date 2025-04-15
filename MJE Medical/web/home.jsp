@@ -320,7 +320,7 @@
                         <img src="img/solic.jpeg" class="card-img-top" />
                         <div class="card-body">
                             <h5 class="card-title">Solicitar cita</h5>
-                            <p class="card-text">Descripcion: Agrega, modifica o cancela tus citas.</p>
+                            <p class="card-text">Descripcion: Añada una cita.</p>
                             <div class="mt-auto">
                                 <a href="Solicita.jsp" class="btn btn-primary w-100"><b>Seleccionar</b></a>
                             </div>
